@@ -1,4 +1,4 @@
-# General Search and Code
+# Technologies
 
 ## Most Popular Languages
 
@@ -222,5 +222,4 @@ language: Ruby
 | -------- | ---- | ---- |
 
 language: JavaScript or TypeScript (front end)
-
 

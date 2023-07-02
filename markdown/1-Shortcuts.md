@@ -166,7 +166,7 @@ Custom: chrome://extensions/shortcuts
 
 
 
-## DevTools
+## Chrome DevTools
 
 `Ctrl Shift C` open the Elements panel
 
