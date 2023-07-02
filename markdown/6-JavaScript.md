@@ -2680,7 +2680,6 @@ let max = 300;
 
 function getRandomInt(max) {
   return Math.floor(Math.random()*(max + 1));
-  max = 15;
 }
 
 console.log(getRandomInt(100)); // will use 100
@@ -3112,7 +3111,7 @@ and the **stack trace**
 
 the **stack trace**
 
-![](/home/parker/Dropbox/objects-photos-etc/js-errors.png)
+![](./../objects-photos-etc/js-errors.png)
 
 this stack trace tells us that..
 
@@ -3176,6 +3175,8 @@ please write clean code
 there are different opinions on what constitutes clean code - but the most important thing is really just consistency
 
 for example - Odin will use **2 spaces** for indentation
+
+
 
 ### Tips
 
@@ -3253,7 +3254,7 @@ myArray; // "hello", "item2", "item3"
 
 **arrays** are data type **object** but should be thought of somewhat seperately from objects
 
-**objects** use **names** to access their "members"
+**objects** use **keys** to access their "members"
 
 ```javascript
 const user = {firstName:"John", lastName:"Doe", age:46}; // this is an OBJECT not an ARRAY
@@ -3267,8 +3268,9 @@ in JavaScript, **arrays** use **numbered indices**
 
 
 
-you should use **objects** when you want the indices to be strings
 you should use **arrays** when you want the indices to be numbers
+
+you should use **objects** when you want the indices to be strings
 
 
 
@@ -3859,7 +3861,7 @@ divs.forEach((div) => {
 });
 ```
 
-we use an aditional argument in `addEventListener()` to deal with this..
+we use an additional argument in `addEventListener()` to deal with this..
 
 ```javascript
 div.addEventListener('click', someFunc); // run the function for all 'clicked on' elements
@@ -3963,7 +3965,7 @@ DELETE - delete data from server (delete profile pic)
 
 
 
-5xx codes **Server Error** - server failed to fulfil an apparent valid request
+5xx codes **Server Error** - server failed to fulfill an apparent valid request
 
 `500` Internal server error
 
@@ -4005,7 +4007,7 @@ and here is a line of JSON..
 }
 ```
 
-NOTE you must use **double quotes** in JSON whereas in JavaScript they are interchangable
+NOTE you must use **double quotes** in JSON whereas in JavaScript single and double quotes are interchangeable
 
 and actually you can convert a **JavaScript Object** to **JSON** using JavaScript..
 
@@ -4059,11 +4061,11 @@ console.log(theObject.hobbies[0])
 
 ## HTTP and JavaScript
 
-To use HTTP with vanilla JaVascript
+To use HTTP with vanilla JavaScript
 
 you can use the `XMLHttpRequest()` object
 
-or the newer `fetch()` method which is preffered for it's simplicity - but may not be able to handle more complex scenarios
+or the newer `fetch()` method which is preferred for it's simplicity - but may not be able to handle more complex scenarios
 
 Both allow you to send HTTP requests and receive responses asynchronously using JavaScript
 
@@ -4228,7 +4230,7 @@ fetch('./people.json', {
   .catch(error => console.error(error));
 ```
 
-`PUT` reqeust
+`PUT` request
 
 `DELETE` request
 

@@ -1,5 +1,7 @@
 # Node.js
 
+## Runtime Environment
+
 Node.js is a JavaScript runtime environment that allows you to run JavaScript outside of your web browser
 
 often used for web servers, REST APIs, and microservices
@@ -21,7 +23,7 @@ there are **two** JavaScript runtime environments..
 
 
 
-#### Browser Runtime Environment
+### Browser Runtime Environment
 
 is the most common place JavaScript code is executed
 
@@ -39,7 +41,7 @@ in order to create back-end applications that could run on a computer WITHOUT a 
 
 
 
-#### Node Runtime Environment
+### Node Runtime Environment
 
 in 2009, the Node runtime environment was created for the purpose of executing JavaScript code without a browser, thus enabling programmers to create full-stack (front-end and back-end) applications using only the JavaScript language
 
@@ -51,17 +53,17 @@ Node executes JavaScript using the V8 JavaScript engine (same as Google Chrome)
 
 Node is an entirely different runtime environment though
 
-meaning that browser-environment data values and functions - like `alert()` - can’t be used
+meaning that browser-environment data values and functions - like `alert()` - can't be used
 
 instead the Node runtime environment gives back-end applications access to a variety of features unavailable in a browser
 
-such as access to the server’s file system, database, and network
+such as access to the server's file system, database, and network
 
 the Node runtime is commonly used to create **command line tools** and **web servers**
 
 
 
-#### Installing Node
+## Installing Node
 
 `nvm` - Node Version Manager - used to change Node versions and upgrade Node
 
@@ -89,7 +91,7 @@ which in this case tells `nvm` to use the most recent LTS version of Node instal
 
 
 
-#### Using Node
+## Using Node
 
 Node provides an interactive console which lets you run and edit your javascript code right in your terminal
 
@@ -99,19 +101,19 @@ node  # opens the Node terminal console
 
 
 
-#### Node Project
+## Node Project
 
-`npm` is used to install 3rd party packages - all dependencies required to run a node project are listed in a `package.json` file
+`npm` is used to install 3rd party packages - all dependencies required to run a node project are listed in a `packages.json` file
 
 `npm init` generates the `package.json` file
 
-`npm install express` installs express (or any package) locally and will update the `package.json` file automatically
+`npm install express` installs express (or any package) locally and will update the `packages.json` file automatically
 
 `npm install -g express` installs express globally
 
 
 
-And so node is so useful because you can utilize all of these modules (also called packages) in building your project
+Node is so useful because you can utilize all of these modules (also called packages) in building your project
 
 There are three basic types of modules..
 
@@ -132,7 +134,7 @@ const myModule = require('./myModule.js'); // a custom module
 
 
 
-#### Creating A Node Project
+## Creating A Node Project
 
 so the first thing you do to make it a node project is, inside your project folder..
 
@@ -164,7 +166,7 @@ so the `node_modules` folder wont be pushed to GitHub!
 
 
 
-#### Simple deployment to Render.com
+## Simple deployment to Render.com
 
 the free trial of Render.com offers very little storage - so APIs will have to be small
 
@@ -186,11 +188,11 @@ AWS/GCP is the hard mode option for everything
 
 
 
-#### Custom Modules
+## Custom Modules
 
 Now we have a main `js` file usually called `index.js` `app.js` or `main.js` and then many other `js` files which are the 'modules'
 
-And we can create custom modules so that our main code doesn't get bloated for example if we wanted to store an object that may get really big we can store it in a seperate `js` file like..
+And we can create custom modules so that our main code doesn't get bloated for example if we wanted to store an object that may get really big we can store it in a separate `js` file like..
 
 ```javascript
 // person.js
@@ -223,7 +225,7 @@ function (exports, require, module, __filename, __dirname) {
 }
 ```
 
-and so we have access to these parametes in the module file!
+and so we have access to these parameters in the module file!
 
 which we can see with..
 
@@ -234,7 +236,7 @@ console.log(__filename) // /home/parker/repos/test/person.js
 
 
 
-#### Core Modules
+## Core Modules
 
 to use a node "core" module (see Node docs for info on each one) we simply require them in our file..
 
@@ -347,7 +349,7 @@ console.log(myURL.searchParams.get('id')); // 100
 
 
 
-#### Events
+## Events
 
 **events** is maybe the most important "core" module of Node
 
@@ -392,6 +394,7 @@ when an object is created from the `MyEmitter` class, it will have access to all
 
 
 
-#### Third-Party Modules
+## Third-Party Modules
 
-you just install them and use them
+`npm install <package>`
+
