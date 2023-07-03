@@ -30,7 +30,7 @@ React components, in general, usually have parent and/or child components. This 
 
 
 
-### Class Components
+#### Class Components
 
 ```jsx
 import React, { Component } from 'react'
@@ -135,7 +135,7 @@ export default App;
 
 
 
-### Functional Components
+#### Functional Components
 
 Declaring a component using functional, rather than class, syntax, is the more modern approach to defining components
 
@@ -187,7 +187,7 @@ create-react-app..
 
 
 
-### index.js
+#### index.js
 
 `index.js` is the "entry point" of your application by default
 
@@ -204,13 +204,13 @@ In short, this line of code tells React to render the App component into the DOM
 
 
 
-### index.html
+#### index.html
 
 is ultimately the main file served on the browser
 
 
 
-### manifest.json
+#### manifest.json
 
 This is a web app manifest describes your application, and it's used by mobile devices if a shortcut is added to the home screen
 
@@ -220,7 +220,7 @@ Basically, the information read from this file is used to populate the web appâ€
 
 
 
-### Webpack and Bundled Scripts
+#### Webpack and Bundled Scripts
 
 Think of webpack as a tool that bundles up all your source files and creates a single `bundle.js` file that can be served from the `index.html` file inside a `<script>` tag in the `<body>` element
 
@@ -234,7 +234,19 @@ the configuration for how webpack will bundle your `js` files can be found here:
 
 
 
-### package.json
+#### Hot Module Replacement (HMR)
+
+In a create-react-app project, Hot Module Replacement (HMR) is automatically enabled during development by default.
+
+Hot Module Replacement (HMR) is a feature in webpack to inject updated modules into the active runtime.
+
+With a browser reload, the state of your application will be reset, meaning you will have to redo any process or changes to get back to the state you were viewing.
+
+With HMR, the reload is avoided. HMR allows you to exchange, add, or remove JavaScript modules and CSS while the application is still running, all without having to reload the browser.
+
+
+
+#### package.json
 
 This file, along with `package-lock.json` lists the packages your project depends on and which versions of a package your project can use.
 
