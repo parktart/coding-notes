@@ -6,9 +6,106 @@
 
 
 
+## Create-react-app
+
+Developers at Facebook came up with a great tool called `create-react-app`, which sets up a complete React application for you. By running one command, it does all the necessary setup and configuration for you to immediately start working on your project.
+
+Create React App is recommended by the React community for building single-page applications (SPAs)
+
+`npx create-react-app my-app`
+
+`npm start` launches the app
+
+
+
+create-react-app..
+
+- abstracts away the complex configurations that come with creating a new React project
+- comes with a built-in development server that allows you to see changes in real time as you make them
+- includes a comprehensive set of development tools, such as linting and testing, out-of-the-box
+
+
+
+#### index.js
+
+`index.js` is the "entry point" of your application by default
+
+```jsx
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+In short, this line of code tells React to render the App component into the DOM, and more specifically, into the element with the id "root" (which you'll find in the index.html file)
+
+
+
+#### index.html
+
+is ultimately the main file served on the browser
+
+
+
+#### manifest.json
+
+This is a web app manifest that describes your application, and may be used by mobile devices or in other places
+
+The metadata in `manifest.json` determines what icons, names, and branding colors to use when the web app is displayed on someone's favorites or home screen in say Google Chrome on Android, or Safari on iOS
+
+Basically, the information read from this file is used to populate the web app's icons, colors, names, etc.
+
+
+
+#### Webpack and Bundled Scripts
+
+A create-react-app project comes with webpack configured
+
+Think of webpack as a tool that bundles up all your `js` source files and creates a single `bundle.js` file that can be served from the `index.html` file inside a `<script>` tag within the `<body>` element
+
+This reduces the number of HTTP requests made within the app, which improves performance
+
+All your `js` files (react components) will be bundled into `bundle.js` using webpack
+
+the configuration for how webpack will bundle your `js` files can be found here:
+
+` .\node_modules\react-scripts\config\webpack.config.js`
+
+
+
+#### Hot Module Replacement (HMR)
+
+A create-react-app project comes with Hot Module Replacement (HMR) enabled by default (for developement).
+
+Hot Module Replacement (HMR) is a feature in webpack to inject updated modules into the active runtime.
+
+With a browser reload, the state of your application will be reset, meaning you will have to redo any process or changes to get back to the state you were viewing.
+
+With HMR, the reload is avoided. HMR allows you to exchange, add, or remove JavaScript modules and CSS while the application is still running, without having to reload the browser.
+
+
+
+#### package.json
+
+This file, along with `package-lock.json` lists the packages your project depends on and which versions of a package your project can use.
+
+This makes your build reproducible and, therefore, easier to share with other developers.
+
+The `scripts` field is of particular interest here. The `start`, `build`, `test`, and `eject` commands point to react-scripts' version of `start`, `build`, `test`, and `eject`. This specifies that when you run `npm` commands like `npm start`, it will actually run `react-scripts start`
+
+react-scripts is a set of scripts from the create-react-app starter pack. `react-scripts start` sets up the development environment and starts a server, as well as convenient development features such as hot module reloading
+
+if you clone a repository, use `npm install` to install all the required dependencies listed in `package.json`
+
+
+
 ## Components
 
-Applications built with React are made with (reusable) components. Components are your “building blocks.” To gain confidence using React, you should learn to divide your application or project into these separate components.
+Applications built with React are made with reusable components. A component is a piece of the UI that has its own logic and appearance.
+
+Components are your "building blocks". A component can be as small as a button, or as large as an entire page. To gain confidence using React, you should learn to divide your application or project into these separate components.
 
 For example, a simple website could be divided into the following components:
 
@@ -19,7 +116,7 @@ For example, a simple website could be divided into the following components:
 
 
 
-In React, each component is defined in an ES6 (ECMAScript 2015) module. ES6 introduced the `import` statement which allows you to import code from one module into another module. This allows us to write each component in a separate file and import all components into the parent component like so:
+In React, each component is defined in an ES6 (ECMAScript 2015) module. ES6 introduced the `import` statement which allows you to import code from one module into another. This allows us to write each component in a separate file and import all components into the parent component like so:
 
 ```jsx
 // App.js
@@ -69,7 +166,11 @@ class App extends Component {
 
 This gives our App component all of the fun methods and properties every React component should have.
 
-Note React components, like all classes and object constructors, should always be declared with a capital letter at the beginning (PascalCase)
+Note React components, like all classes and object constructors, should be names in PascalCase
+
+By using PascalCase, you can easily distinguish components from regular HTML elements or variables in JSX.
+
+In fact, in JSX, lowercase elements are treated as HTML tags, and a lowercase React component may not render correctly!
 
 ```jsx
 {/* Javascript functions can be written here */}
@@ -91,7 +192,7 @@ This looks like HTML, but is actually **JSX**.
 
 JSX is an HTML-like syntax that is "transpiled" (or converted) into JavaScript so a browser is able to process it
 
-Note in JSX you can't use some JavaScript protected words as html attributes, and instead..
+Note in JSX you can't use some JavaScript-protected words as html attributes, and instead..
 
 `class` = `className`
 
@@ -101,7 +202,7 @@ Note in JSX you can't use some JavaScript protected words as html attributes, an
 
 All attributes in JSX are written in camelCase and some have their names changed completely
 
-The `render()` function is the most used React "lifecycle" function.
+The `render()` function is the most used React "lifecycle" function
 
 Every React class component needs a render function, which returns *one* top-level JSX element.
 
@@ -127,7 +228,7 @@ render() {
 
 
 
-So that we can reuse our component in other files of our project, we export the component..
+So that we can re-use our component in other files of our project, we export the component..
 
 ```jsx
 export default App;
@@ -162,99 +263,400 @@ export default App;
 with functional components..
 
 1. You don't have to import and extend "Component" from React
-2. You don't need a constructor.
-3. You don't need the render function, instead we put the return statement right at the end of the function body.
+2. You don't need a constructor
+3. You don't need the render function, instead we just put the return statement at the end of the function body
 
 
 
-## Create-react-app
+### Displaying Data
 
-Developers at Facebook came up with a great tool called `create-react-app`, which sets up a complete React application for you. By running one command, it does all the necessary setup and configuration for you to immediately start working on your project.
+JSX lets you put markup into JavaScript. 
 
-Create React App is recommended by the React community for building single-page applications (SPAs)
+Curly braces allow you to "escape back" into JavaScript
 
-`npx create-react-app my-app`
-
-`npm start` launches the app
-
-
-
-create-react-app..
-
-- abstracts away the complex configurations that come with creating a new React project
-- comes with a built-in development server that allows you to see changes in real time as you make them
-- includes a comprehensive set of development tools, such as linting and testing, out-of-the-box
-
-
-
-#### index.js
-
-`index.js` is the "entry point" of your application by default
+for example to embed a variable and display it to the user..
 
 ```jsx
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+return (
+  <h1>Welcome  {user.name}!</h1>
 );
 ```
 
-In short, this line of code tells React to render the App component into the DOM, and more specifically, into the element with the id "root" (which you'll find in the created index.html file).
+or for an html attribute..
+
+```jsx
+return (
+  <img
+    className="avatar"
+    src={user.imageUrl}   // note no "quotes"!
+  />
+);
+```
+
+with more complex expressions..
+
+```jsx
+return (
+    <img
+      className="avatar"
+      src={user.imageUrl}
+      alt={'Photo of ' + user.name}   // concatenation
+    />
+  );
+```
 
 
 
-#### index.html
+### Conditional Rendering
 
-is ultimately the main file served on the browser
+render a Welcome screen or LoginForm depending on `user.isLoggedIn`
+
+```jsx
+const user = {
+    name: "Parker",
+    age: 27,
+    isLoggedIn: true
+};
+
+function App() {
+    let content;
+    if (user.isLoggedIn) {
+        content = <Welcome user={user} />;
+    } else {
+        content = <LoginForm />;
+    }
+    return (
+        <div>
+            {content}
+        </div>
+    );
+}
+```
+
+with javascript ternary operator syntax..
+
+```jsx
+function App() {
+    return (
+        <div>
+            {user.isLoggedIn
+                ? ( <Welcome user={user} /> )
+                : ( <LoginForm /> )
+            }
+        </div>
+    );
+}
+```
+
+or if you don't need the `else` branch..
+
+```jsx
+function App() {
+    return (
+        <div>
+            {user.isLoggedIn && <Welcome user={user} />}
+        </div>
+    );
+}
+```
 
 
 
-#### manifest.json
+### Rendering Lists
 
-This is a web app manifest describes your application, and it's used by mobile devices if a shortcut is added to the home screen
+You will rely on JavaScript `for` loops and `array.map()` to render lists of components
 
-The metadata in `manifest.json` determines what icons, names, and branding colors to use when the web app is displayed on someone's favorites or home screen in say Google Chrome, on Android or Safari on iOS
+```jsx
+// Items.js
 
-Basically, the information read from this file is used to populate the web app’s icons, colors, names, etc.
+const items = [
+    { title: 'Cabbage', id: 1 },
+    { title: 'Garlic', id: 2 },
+    { title: 'Apple', id: 3 },
+];
+
+function Items() {
+    const listItems = items.map(item =>
+        <li key={item.id}>
+            {item.title}
+        </li>
+    );
+
+    return (
+        <div>
+            <h3>Your items:</h3>
+            <ul>{listItems}</ul>
+        </div>
+    );
+}
+
+export default Items;
+```
+
+Notice how `<li>` has a `key` attribute. 
+
+For each item in a list, you should pass a string or a number that uniquely identifies that item among its siblings. 
+
+Usually, the key should come from your data, such as a database ID. 
+
+React uses your keys to know what happened if you later insert, delete, or reorder the items.
 
 
 
-#### Webpack and Bundled Scripts
+### Responding to events
 
-Think of webpack as a tool that bundles up all your source files and creates a single `bundle.js` file that can be served from the `index.html` file inside a `<script>` tag in the `<body>` element
+You can respond to events by declaring *event handler* functions inside your components:
 
-This reduces the number of HTTP requests made within the app which improves performance
+```jsx
+function MyButton() {
+  function handleClick() {
+    alert('You clicked me!');
+  }
 
-All your `js` files (react components) will be bundled into `bundle.js` using webpack
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}
+```
 
-the configuration for how webpack will bundle your `js` files can be found here:
+Notice how `onClick={handleClick}` has no parentheses at the end! Do not *call* the event handler function: you only need to *pass it down*. React will call your event handler when the user clicks the button.
 
-` .\node_modules\react-scripts\config\webpack.config.js`
+As opposed to vanilla `html` which would be..
+
+```html
+<button onclick="handleClick( )">
+  Click me
+</button>
+
+<script>
+  function handleClick() {
+    alert('You clicked me!');
+  }
+</script>
+```
 
 
 
-#### Hot Module Replacement (HMR)
+### Updating the screen
 
-In a create-react-app project, Hot Module Replacement (HMR) is automatically enabled during development by default.
+Often, you'll want your component to "remember" some information and display it. For example, maybe you want to count the number of times a button is clicked. To do this, add *state* to your component.
 
-Hot Module Replacement (HMR) is a feature in webpack to inject updated modules into the active runtime.
+```jsx
+import { useState } from 'react';
 
-With a browser reload, the state of your application will be reset, meaning you will have to redo any process or changes to get back to the state you were viewing.
+function App() {
+    const [count, setCount] = useState(0);
 
-With HMR, the reload is avoided. HMR allows you to exchange, add, or remove JavaScript modules and CSS while the application is still running, all without having to reload the browser.
+    function toggleItems() {
+        setShowItems(!showItems);
+        setCount(count + 1);
+    }
+}
+```
+
+```jsx
+const [count, setCount] = useState(0);
+```
+
+`count` = the current state
+
+`setCount` = the function that lets you update the state
+
+`useState(0)` = the initial state
 
 
 
-#### package.json
+If you render the same component multiple times, each will get its own state..
 
-This file, along with `package-lock.json` lists the packages your project depends on and which versions of a package your project can use.
+```jsx
+import Button from './Button';
 
-This makes your build reproducible and, therefore, easier to share with other developers.
+function App() {
+  return (
+    <div>
+      <h1>Counters that update separately</h1>
+      <Button />
+      <Button />
+    </div>
+  );
+}
 
-The `scripts` field is of particular interest here. The `start`, `build`, `test`, and `eject` commands point to react-scripts' version of `start`, `build`, `test`, and `eject`. This specifies that when you run `npm` commands like `npm start`, it will actually run `react-scripts start`
+export default App;
+```
 
-react-scripts is a set of scripts from the Create React App starter pack. `react-scripts start` sets up the development environment and starts a server, as well as convenient development features such as hot module reloading
+```jsx
+import { useState } from 'react';
+
+function Button() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <button onClick={() => setCount(count + 1)}>
+            Clicked {count} times
+        </button>
+    );
+}
+
+export default Button;
+```
+
+Each instance of the Button component has its own count state.
+
+However, if we want the components to display the same `count` and update together, you need to move the state from the individual buttons "upwards" to the closest component containing all of them. In this case, `App`.
+
+```jsx
+import { useState } from 'react';
+import Button from './Button';
+
+function App() {
+  const [count, setCount] = useState(0);
+  function increaseCount() {
+    setCount(count + 1);
+  }
+  
+  return (
+    <div>
+      <h1>Counters that update separately</h1>
+      <Button count={count} onClick={increaseCount} />
+      <Button count={count} onClick={increaseCount} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+```jsx
+function Button( {count, onClick} ) {
+    return (
+        <button onClick={onClick}>
+            Clicked {count} times
+        </button>
+    );
+}
+
+export default Button;
+```
+
+The information you pass down like this is called *props*. 
+
+Now the `App` component contains the `count` state and the `increaseCount` event handler, and *passes both of them down as props* to the buttons.
+
+This is called "lifting state up". By moving state up, you've shared it between components.
+
+
+
+### Using Hooks
+
+Functions starting with `use` are called *Hooks*.
+
+`useState` is a built-in Hook provided by React.
+
+You can find other built-in Hooks in the [API reference.](https://react.dev/reference/react)
+
+You can also write your own Hooks by combining the existing ones.
+
+Hooks are more restrictive than other functions. You can only call Hooks *at the top* of your components (or other Hooks).
+
+If you want to use `useState` in a condition or a loop, extract a new component and put it there.
+
+Some built-in React Hooks..
+
+`useState` - declares a state variable that you can update directly
+
+`useEffect` - is used to add side effects or perform actions in response to certain events or changes
+
+`useContext` - lets a component receive information from distant parents without passing it as props
+
+`useRef` - lets a component hold some information that isn't used for rendering - refs differ state in that updating a ref does not re-render your component - most often it's used to hold a DOM node
+
+`useMemo` - can be used to tell React to skip calculations and unnecessary re-rendering if the data has not changed since the previous render
+
+
+
+#### useState
+
+The `useState` hook is used to add state to functional components. It allows you to declare and manage state variables within your components. The `useState` hook returns an array with two elements: the current state value and a function to update that value.
+
+```jsx
+import { useState } from 'react';
+
+function MyComponent() {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    setCount(count - 1);
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+}
+
+export default MyComponent
+```
+
+The `setCount` function can be invoked with a new value, and when it's called, React will re-render the `MyComponent` with the updated state.
+
+#### useEffect
+
+The `useEffect` hook is used to add side effects or perform actions in response to certain events or changes.
+
+It allows you to incorporate logic that should be executed after the rendering of your components.
+
+You should use it when you need to connect and synchronize a component with an external system. This includes dealing with network, browser DOM, animations, and other non-React code. Effects are an "escape hatch" from the React paradigm - don't use Effects to orchestrate the data flow of your application - if you're not interacting with an external system, you might not need an Effect.
+
+The `useEffect` hook takes two arguments: a callback function and an optional array of dependencies. The callback function is the code you want to execute, and it will be triggered after the component has rendered. The dependencies array specifies the values that the effect depends on.
+
+```jsx
+import { useEffect } from 'react';
+
+function MyComponent() {
+  useEffect(() => {
+    // Code to run after MyComponent renders
+    console.log('Component rendered');
+  }, [ ]); // Empty dependency array means the effect runs only once (when the component is initially rendered)
+
+  // Rest of your component's code
+  return <div>Hi!</div>;
+}
+
+export default MyComponent;
+```
+
+If you want the effect to run whenever a specific value changes, you can include that value in the dependency array.
+
+The `useEffect` hook is commonly used for tasks such as fetching data from an API, subscribing to events, setting up timers, manipulating the DOM, or performing clean-up actions when a component is unmounted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
