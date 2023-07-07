@@ -21,7 +21,7 @@ Create React App is recommended by the React community for building single-page 
 create-react-app..
 
 - abstracts away the complex configurations that come with creating a new React project
-- comes with a built-in development server that allows you to see changes in real time as you make them
+- comes with a built-in development server that allows you to see changes in real time without a browser refresh
 - includes a comprehensive set of development tools, such as linting and testing, out-of-the-box
 
 
@@ -127,7 +127,7 @@ React components, in general, usually have parent and/or child components. This 
 
 
 
-#### Class Components
+### Class Components
 
 ```jsx
 import React, { Component } from 'react'
@@ -192,7 +192,7 @@ This looks like HTML, but is actually **JSX**.
 
 JSX is an HTML-like syntax that is "transpiled" (or converted) into JavaScript so a browser is able to process it
 
-Note in JSX you can't use some JavaScript-protected words as html attributes, and instead..
+Note in JSX we can't use some of the normal html attribute names, such as `class`, because they are JavaScript-protected words, and instead..
 
 `class` = `className`
 
@@ -224,6 +224,17 @@ render() {
         </div>
     )
 }
+
+// OR CAN USE
+render() {
+    return (
+        <>
+            <h1>Hello world</h1>
+            <h2>Welcome to my React page!</h2>
+        </>
+    )
+}
+// which avoids adding an extra div to the DOM (<> is called a Fragment here)
 ```
 
 
@@ -236,9 +247,9 @@ export default App;
 
 
 
-#### Functional Components
+### Functional Components
 
-Declaring a component using functional, rather than class, syntax, is the more modern approach to defining components
+Declaring a component using functional, rather than class, syntax is the more modern approach to defining components
 
 ```jsx
 import React from 'react';
@@ -268,6 +279,36 @@ with functional components..
 
 
 
+NOTE starting from React v17, you actually don't need to explicitly import the React module in files that contain React components. So the `import React from 'react'` line is no longer needed!
+
+And to avoid including `export default XXX` you can use the syntax..
+
+```jsx
+// no import needed
+
+export default function App() {
+  return <div className="App">Hello World!</div>;
+}
+
+// no export needed
+```
+
+This syntax comes in handy when you want to define multiple components in the same file - which you may want to do if components are relatively small or tightly related to each other.
+
+```jsx
+export default function Gallery() {
+  <Profile />
+  <Profile />
+  <Profile />
+}
+
+function Profile() {
+  // code
+}
+```
+
+
+
 ### Displaying Data
 
 JSX lets you put markup into JavaScript. 
@@ -278,7 +319,7 @@ for example to embed a variable and display it to the user..
 
 ```jsx
 return (
-  <h1>Welcome  {user.name}!</h1>
+  <h1>Welcome {user.name}!</h1>
 );
 ```
 
@@ -325,6 +366,7 @@ function App() {
     } else {
         content = <LoginForm />;
     }
+  
     return (
         <div>
             {content}
@@ -423,7 +465,7 @@ function MyButton() {
 
 Notice how `onClick={handleClick}` has no parentheses at the end! Do not *call* the event handler function: you only need to *pass it down*. React will call your event handler when the user clicks the button.
 
-As opposed to vanilla `html` which would be..
+As opposed to vanilla `html/js` which would be..
 
 ```html
 <button onclick="handleClick( )">
@@ -441,19 +483,26 @@ As opposed to vanilla `html` which would be..
 
 ### Updating the screen
 
-Often, you'll want your component to "remember" some information and display it. For example, maybe you want to count the number of times a button is clicked. To do this, add *state* to your component.
+Often, you'll want your component to "remember" some information and display it. For example, let's count the number of times a button is clicked. To do this, we add *state* to a component.
 
 ```jsx
 import { useState } from 'react';
 
-function App() {
+function NewBtn() {
     const [count, setCount] = useState(0);
-
-    function toggleItems() {
-        setShowItems(!showItems);
+  
+    function handleClick() {
         setCount(count + 1);
     }
+
+    return (
+        <button onClick={handleClick}>
+            Times clicked: {count}
+        </button>
+    );
 }
+
+export default NewBtn;
 ```
 
 ```jsx
@@ -465,6 +514,10 @@ const [count, setCount] = useState(0);
 `setCount` = the function that lets you update the state
 
 `useState(0)` = the initial state
+
+
+
+NOTE React Hooks must be called in a React function component or a custom React Hook function. So React Hook `useState` cannot be called at the top level (must be *inside* a function component definition)
 
 
 
@@ -519,8 +572,8 @@ function App() {
   return (
     <div>
       <h1>Counters that update separately</h1>
-      <Button count={count} onClick={increaseCount} />
-      <Button count={count} onClick={increaseCount} />
+      <Button count={count} increaseCount={increaseCount} />
+      <Button count={count} increaseCount={increaseCount} />
     </div>
   );
 }
@@ -529,9 +582,9 @@ export default App;
 ```
 
 ```jsx
-function Button( {count, onClick} ) {
+function Button( {count, increaseCount} ) {
     return (
-        <button onClick={onClick}>
+        <button onClick={increaseCount}>
             Clicked {count} times
         </button>
     );
@@ -548,17 +601,17 @@ This is called "lifting state up". By moving state up, you've shared it between 
 
 
 
-### Using Hooks
+### Hooks
 
 Functions starting with `use` are called *Hooks*.
 
 `useState` is a built-in Hook provided by React.
 
-You can find other built-in Hooks in the [API reference.](https://react.dev/reference/react)
+You can find other built-in Hooks in the [React Docs.](https://react.dev/reference/react)
 
 You can also write your own Hooks by combining the existing ones.
 
-Hooks are more restrictive than other functions. You can only call Hooks *at the top* of your components (or other Hooks).
+Hooks are more restrictive than other functions. You can only call Hooks within React components, and more specifically *at the top* of your components.
 
 If you want to use `useState` in a condition or a loop, extract a new component and put it there.
 
@@ -570,7 +623,7 @@ Some built-in React Hooks..
 
 `useContext` - lets a component receive information from distant parents without passing it as props
 
-`useRef` - lets a component hold some information that isn't used for rendering - refs differ state in that updating a ref does not re-render your component - most often it's used to hold a DOM node
+`useRef` - lets a component hold some information that isn't used for rendering - refs differ from state in that updating a ref does not re-render your component - most often it's used to hold a DOM node
 
 `useMemo` - can be used to tell React to skip calculations and unnecessary re-rendering if the data has not changed since the previous render
 
@@ -606,7 +659,9 @@ function MyComponent() {
 export default MyComponent
 ```
 
-The `setCount` function can be invoked with a new value, and when it's called, React will re-render the `MyComponent` with the updated state.
+The `setCount` function can be invoked with a new value, and when invoked, React will re-render `MyComponent` with the updated state.
+
+
 
 #### useEffect
 
@@ -616,37 +671,47 @@ It allows you to incorporate logic that should be executed after the rendering o
 
 You should use it when you need to connect and synchronize a component with an external system. This includes dealing with network, browser DOM, animations, and other non-React code. Effects are an "escape hatch" from the React paradigm - don't use Effects to orchestrate the data flow of your application - if you're not interacting with an external system, you might not need an Effect.
 
-The `useEffect` hook takes two arguments: a callback function and an optional array of dependencies. The callback function is the code you want to execute, and it will be triggered after the component has rendered. The dependencies array specifies the values that the effect depends on.
+The `useEffect` hook takes two arguments: a callback function and an optional array of dependencies. The callback function is the code you want to execute, and it will be executed after the component has rendered. The dependencies array specifies the values that the effect depends on.
 
 ```jsx
 import { useEffect } from 'react';
 
 function MyComponent() {
   useEffect(() => {
-    // Code to run after MyComponent renders
-    console.log('Component rendered');
-  }, [ ]); // Empty dependency array means the effect runs only once (when the component is initially rendered)
+    console.log('effect used');
+  }, [ ]);
 
-  // Rest of your component's code
   return <div>Hi!</div>;
 }
 
 export default MyComponent;
 ```
 
+When you use the `useEffect` hook with an empty dependency array `[ ]`, the code inside `useEffect` should execute only once during the initial rendering of the component. Subsequent updates to the component, such as re-renders caused by changes in props or state, should not cause `useEffect` to execute again.
+
 If you want the effect to run whenever a specific value changes, you can include that value in the dependency array.
 
 The `useEffect` hook is commonly used for tasks such as fetching data from an API, subscribing to events, setting up timers, manipulating the DOM, or performing clean-up actions when a component is unmounted.
 
+NOTE when React.Strict mode is on.. React renders components twice (in dev but not production) in order to detect excacerbate the implications of multiple renders - and helping you to find bugs earlier
 
 
 
+## JSX
+
+JSX is a syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file.
+
+JSX is different from HTML in quite a few ways, including being 'more strict'
+
+Note in JSX..
+
+1. You must return a single root element
+2. all tags must be closed - self-closing tags like `<img>` become `<img/>` in JSX
+3. element attribute names follow the same naming conventions as JavaScript variables (should be camelCase, etc)
 
 
 
-
-
-
+JSX turns into JavaScript and attributes written in JSX become keys of JavaScript objects. You'll notice the JSX element attribute names correspond to the JavaScript object properties you are already familiar with (like `className` and `style`)
 
 
 
