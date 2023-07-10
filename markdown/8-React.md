@@ -101,6 +101,72 @@ if you clone a repository, use `npm install` to install all the required depende
 
 
 
+#### Adding CSS
+
+The `index.css` file provides a global CSS scope for your entire application. It is intended for defining global styles that apply to your entire application, such as font families, base styles, or CSS resets.
+
+The `App.js` component is typically the root component of your application, and `App.css` provides styles specifically for this component and its children.
+
+It is up to you to add site-wide `css` to either `index.css` or `App.css` - I will use `App.css`
+
+beyond that it is best practice to make a `.css` file for each component that needs individual styling
+
+But create-react-app by default injects all `css` into the DOM in `<style>` tags..
+
+So, by default, all CSS rules are scoped globally for the entire React application.
+
+
+
+#### CSS Modules
+
+To create a component-scoped css files, we can use **CSS Modules**, which come preconfigured with create-react-app..
+
+CSS file names will include 'module' like `MyComponent.module.css`
+
+```css
+.main {
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+```
+
+and import it into your component..
+
+```jsx
+import styles from "./MyComponent.module.css";
+
+function MyComponent() {
+  return <div className={styles.main}>Hello</div>;
+};
+
+export default MyComponenet;
+```
+
+you can see this requires you to use *classes* for each component you want to style - you cannot style using element selectors like `p`
+
+It's kind of a mess, so use Sass and Tailwind, detailed below.
+
+
+
+#### Sass (.scss)
+
+beyond CSS Modules, you can use a CSS Preprocessor like Sass (SCSS)
+
+Sass (SCSS): Sass (or SCSS) is a widely used CSS preprocessor that provides features like variables, nesting, mixins, and more. It allows you to write modular and reusable styles. Create React App supports Sass out of the box, so you can use `.scss` files and leverage Sass features.
+
+[About scss](https://www.robinwieruch.de/create-react-app-with-sass-support/)
+
+
+
+#### Bootstrap
+
+beyond `scss` you can use Bootstrap
+
+
+
+
+
 ## Components
 
 Applications built with React are made with reusable components. A component is a piece of the UI that has its own logic and appearance.
@@ -166,11 +232,11 @@ class App extends Component {
 
 This gives our App component all of the fun methods and properties every React component should have.
 
-Note React components, like all classes and object constructors, should be names in PascalCase
+Note React components, like all classes and object constructors, should be named in PascalCase
 
 By using PascalCase, you can easily distinguish components from regular HTML elements or variables in JSX.
 
-In fact, in JSX, lowercase elements are treated as HTML tags, and a lowercase React component may not render correctly!
+In fact, in JSX, lowercase elements are treated as HTML tags, and a lowercase React component won't render correctly!
 
 ```jsx
 {/* Javascript functions can be written here */}
@@ -451,7 +517,7 @@ You can respond to events by declaring *event handler* functions inside your com
 
 ```jsx
 function MyButton() {
-  function handleClick() {
+  const  handleClick = () => {
     alert('You clicked me!');
   }
 
@@ -517,7 +583,7 @@ const [count, setCount] = useState(0);
 
 
 
-NOTE React Hooks must be called in a React function component or a custom React Hook function. So React Hook `useState` cannot be called at the top level (must be *inside* a function component definition)
+NOTE React Hooks must be called in a React function component or a custom React Hook. So React Hook `useState` cannot be called at the top level (must be *inside* a component definition)
 
 
 
@@ -601,7 +667,7 @@ This is called "lifting state up". By moving state up, you've shared it between 
 
 
 
-### Hooks
+## Hooks
 
 Functions starting with `use` are called *Hooks*.
 
@@ -629,7 +695,7 @@ Some built-in React Hooks..
 
 
 
-#### useState
+### useState
 
 The `useState` hook is used to add state to functional components. It allows you to declare and manage state variables within your components. The `useState` hook returns an array with two elements: the current state value and a function to update that value.
 
@@ -663,7 +729,7 @@ The `setCount` function can be invoked with a new value, and when invoked, React
 
 
 
-#### useEffect
+### useEffect
 
 The `useEffect` hook is used to add side effects or perform actions in response to certain events or changes.
 
@@ -697,6 +763,20 @@ NOTE when React.Strict mode is on.. React renders components twice (in dev but n
 
 
 
+## Props
+
+Props are one of the two major pillars of React, the very heart of what the framework was built on.
+
+Prop is short for *property*, as in javascript object property
+
+
+
+
+
+
+
+
+
 ## JSX
 
 JSX is a syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file.
@@ -708,6 +788,7 @@ Note in JSX..
 1. You must return a single root element
 2. all tags must be closed - self-closing tags like `<img>` become `<img/>` in JSX
 3. element attribute names follow the same naming conventions as JavaScript variables (should be camelCase, etc)
+4. it's recommended to use "double quotes" for HTML attributes and 'single quotes' for JavaScript within the JSX code
 
 
 
