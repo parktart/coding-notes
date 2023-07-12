@@ -119,7 +119,7 @@ So, by default, all CSS rules are scoped globally for the entire React applicati
 
 #### CSS Modules
 
-To create a component-scoped css files, we can use **CSS Modules**, which come preconfigured with create-react-app..
+To create component-scoped css files, we can use **CSS Modules**, which come preconfigured with create-react-app..
 
 CSS file names will include 'module' like `MyComponent.module.css`
 
@@ -143,7 +143,9 @@ function MyComponent() {
 export default MyComponenet;
 ```
 
-you can see this requires you to use *classes* for each component you want to style - you cannot style using element selectors like `p`
+note global styles will still be applied to these elements unless overwritten in the `.module.css` file with a more specific selector
+
+and because CSS modules use only *class selectors* for selecting elements to style - you cannot style using element selectors like `p` in a `.module.css` file
 
 It's kind of a mess, so use Sass and Tailwind, detailed below.
 
@@ -161,7 +163,7 @@ Sass (SCSS): Sass (or SCSS) is a widely used CSS preprocessor that provides feat
 
 #### Bootstrap
 
-beyond `scss` you can use Bootstrap
+beyond `scss` you can use Bootstrap (learn Bootstrap and `bootstrap/scss`)
 
 
 

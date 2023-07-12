@@ -4,7 +4,7 @@ VSCode extensions: Prettier - Auto Rename Tag - x
 
 ## VSCode
 
-`Ctrl K S` view shortcuts
+`Ctrl K S` view keyboard shortcuts
 
 `Ctrl P` search for a file
 
