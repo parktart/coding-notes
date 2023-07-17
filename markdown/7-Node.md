@@ -398,3 +398,33 @@ when an object is created from the `MyEmitter` class, it will have access to all
 
 `npm install <package>`
 
+
+
+
+
+## Cloning a Node Project
+
+
+
+
+
+#### package-lock.json
+
+The decision to include or exclude the `package-lock.json` file in version control for a Node.js project depends on various factors.
+
+Argument for including `package-lock.json` in version control:
+
+- Reproducible Builds: The `package-lock.json` file ensures deterministic and reproducible builds. It records the exact versions of all dependencies and their transitive dependencies, including specific versions of nested packages. By including it in version control, you guarantee that anyone checking out the repository will have the same dependency versions, reducing the chances of compatibility issues.
+
+Argument for excluding `package-lock.json` from version control:
+
+- Smaller Repository Size: The `package-lock.json` file can become quite large, especially in projects with numerous dependencies or frequent updates. Excluding it from version control reduces the size of the repository, making cloning and pulling faster, especially in scenarios with limited bandwidth or when dealing with large teams.
+- Note dependency management tools like npm and Yarn automatically generate the `package-lock.json` file during installation or update commands. By excluding it from version control, you rely on these tools to ensure consistent dependency resolution. It can be advantageous if you trust the package manager and its ability to handle dependency resolution correctly.
+
+
+
+If the `package-lock.json` file is included in a repo's source control, running `npm install` to install package files may edit the `package-lock.json` file, which may be undesirable.
+
+When you clone a repo that contains a `package-lock.json` file, you can simply run `npm ci` instead of `npm install`. The `npm ci` (or `npm clean-install`) command installs the dependencies based on the locked versions specified in `package-lock.json`. This command skips the dependency resolution process and installs the exact versions specified in the lock file, providing consistent results across different environments.
+
+Using `npm ci` is generally preferred over `npm install` in scenarios where the `package-lock.json` file is present because it ensures a reproducible and deterministic installation process, respecting the locked versions. This is particularly important in production or CI/CD environments where consistency and reliability are crucial.

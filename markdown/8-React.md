@@ -99,6 +99,8 @@ react-scripts is a set of scripts from the create-react-app starter pack. `react
 
 if you clone a repository, use `npm install` to install all the required dependencies listed in `package.json`
 
+or, if the cloned repo contains a `package-lock.json` file, and you want to respect the exact versions specified, use `npm ci` (clean install) instead of `npm install`
+
 
 
 #### Adding CSS
@@ -147,7 +149,7 @@ note global styles will still be applied to these elements unless overwritten in
 
 and because CSS modules use only *class selectors* for selecting elements to style - you cannot style using element selectors like `p` in a `.module.css` file
 
-It's kind of a mess, so use Sass and Tailwind, detailed below.
+It's kind of a mess, so use Sass and Bootstrap, detailed below.
 
 
 
@@ -365,9 +367,13 @@ This syntax comes in handy when you want to define multiple components in the sa
 
 ```jsx
 export default function Gallery() {
-  <Profile />
-  <Profile />
-  <Profile />
+  return (
+      <>
+          <Profile />
+          <Profile />
+          <Profile />
+      </>
+  );
 }
 
 function Profile() {
@@ -377,7 +383,26 @@ function Profile() {
 
 
 
-### Displaying Data
+## JSX
+
+JSX is a syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file.
+
+JSX is different from HTML in quite a few ways, including being 'more strict'
+
+Note in JSX..
+
+1. you must return a single root element
+2. all tags must be closed - self-closing tags like `<img>` become `<img/>` in JSX
+3. element attribute names follow the same naming conventions as JavaScript variables (should be camelCase, etc)
+4. it's recommended to use "double quotes" for HTML attributes and 'single quotes' for JavaScript within the JSX code
+
+
+
+JSX turns into JavaScript and attributes written in JSX become keys of JavaScript objects. You'll notice the JSX element attribute names correspond to the JavaScript object properties you are already familiar with (like `className` and `style`)
+
+
+
+#### Displaying Data
 
 JSX lets you put markup into JavaScript. 
 
@@ -416,7 +441,7 @@ return (
 
 
 
-### Conditional Rendering
+#### Conditional Rendering
 
 render a Welcome screen or LoginForm depending on `user.isLoggedIn`
 
@@ -472,7 +497,7 @@ function App() {
 
 
 
-### Rendering Lists
+#### Rendering Lists
 
 You will rely on JavaScript `for` loops and `array.map()` to render lists of components
 
@@ -513,7 +538,7 @@ React uses your keys to know what happened if you later insert, delete, or reord
 
 
 
-### Responding to events
+#### Responding to events
 
 You can respond to events by declaring *event handler* functions inside your components:
 
@@ -549,9 +574,71 @@ As opposed to vanilla `html/js` which would be..
 
 
 
-### Updating the screen
+## Hooks
 
-Often, you'll want your component to "remember" some information and display it. For example, let's count the number of times a button is clicked. To do this, we add *state* to a component.
+Functions starting with `use` are called *Hooks*.
+
+`useState` is a built-in Hook provided by React.
+
+You can find other built-in Hooks in the [React Docs.](https://react.dev/reference/react)
+
+You can also write your own Hooks by combining the existing ones.
+
+Hooks are more restrictive than other functions. You can only call Hooks within React components, and more specifically *at the top* of your components.
+
+If you want to use `useState` in a condition or a loop, extract a new component and put it there.
+
+Some built-in React Hooks..
+
+`useState` - declares a state variable that you can update directly
+
+`useEffect` - is used to add side effects or perform actions in response to certain events or changes
+
+`useContext` - lets a component receive information from distant parents without passing it as props
+
+`useRef` - lets a component hold some information that isn't used for rendering - refs differ from state in that updating a ref does not re-render your component - most often it's used to hold a DOM node
+
+`useMemo` - can be used to tell React to skip calculations and unnecessary re-rendering if the data has not changed since the previous render
+
+
+
+### useState
+
+The `useState` hook is used to add state to functional components. It allows you to declare and manage state variables within your components. The `useState` hook returns an array with two elements: the current state value and a function to update that value.
+
+```jsx
+import { useState } from 'react';
+
+function MyComponent() {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    setCount(count - 1);
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+}
+
+export default MyComponent
+```
+
+The `setCount` function can be invoked with a new value, and when invoked, React will re-render `MyComponent` with the updated state.
+
+
+
+EXAMPELE:
+
+Let's count the number of times a button is clicked. To do this, we add *state* to a component.
 
 ```jsx
 import { useState } from 'react';
@@ -669,68 +756,6 @@ This is called "lifting state up". By moving state up, you've shared it between 
 
 
 
-## Hooks
-
-Functions starting with `use` are called *Hooks*.
-
-`useState` is a built-in Hook provided by React.
-
-You can find other built-in Hooks in the [React Docs.](https://react.dev/reference/react)
-
-You can also write your own Hooks by combining the existing ones.
-
-Hooks are more restrictive than other functions. You can only call Hooks within React components, and more specifically *at the top* of your components.
-
-If you want to use `useState` in a condition or a loop, extract a new component and put it there.
-
-Some built-in React Hooks..
-
-`useState` - declares a state variable that you can update directly
-
-`useEffect` - is used to add side effects or perform actions in response to certain events or changes
-
-`useContext` - lets a component receive information from distant parents without passing it as props
-
-`useRef` - lets a component hold some information that isn't used for rendering - refs differ from state in that updating a ref does not re-render your component - most often it's used to hold a DOM node
-
-`useMemo` - can be used to tell React to skip calculations and unnecessary re-rendering if the data has not changed since the previous render
-
-
-
-### useState
-
-The `useState` hook is used to add state to functional components. It allows you to declare and manage state variables within your components. The `useState` hook returns an array with two elements: the current state value and a function to update that value.
-
-```jsx
-import { useState } from 'react';
-
-function MyComponent() {
-  const [count, setCount] = useState(0);
-
-  const increment = () => {
-    setCount(count + 1);
-  };
-
-  const decrement = () => {
-    setCount(count - 1);
-  };
-
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
-    </div>
-  );
-}
-
-export default MyComponent
-```
-
-The `setCount` function can be invoked with a new value, and when invoked, React will re-render `MyComponent` with the updated state.
-
-
-
 ### useEffect
 
 The `useEffect` hook is used to add side effects or perform actions in response to certain events or changes.
@@ -761,7 +786,9 @@ If you want the effect to run whenever a specific value changes, you can include
 
 The `useEffect` hook is commonly used for tasks such as fetching data from an API, subscribing to events, setting up timers, manipulating the DOM, or performing clean-up actions when a component is unmounted.
 
-NOTE when React.Strict mode is on.. React renders components twice (in dev but not production) in order to detect excacerbate the implications of multiple renders - and helping you to find bugs earlier
+NOTE when React.Strict mode is on.. React renders components twice (in dev but not production) in order to detect and excacerbate the implications of multiple renders - and help you to find bugs earlier
+
+
 
 
 
@@ -770,31 +797,6 @@ NOTE when React.Strict mode is on.. React renders components twice (in dev but n
 Props are one of the two major pillars of React, the very heart of what the framework was built on.
 
 Prop is short for *property*, as in javascript object property
-
-
-
-
-
-
-
-
-
-## JSX
-
-JSX is a syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file.
-
-JSX is different from HTML in quite a few ways, including being 'more strict'
-
-Note in JSX..
-
-1. You must return a single root element
-2. all tags must be closed - self-closing tags like `<img>` become `<img/>` in JSX
-3. element attribute names follow the same naming conventions as JavaScript variables (should be camelCase, etc)
-4. it's recommended to use "double quotes" for HTML attributes and 'single quotes' for JavaScript within the JSX code
-
-
-
-JSX turns into JavaScript and attributes written in JSX become keys of JavaScript objects. You'll notice the JSX element attribute names correspond to the JavaScript object properties you are already familiar with (like `className` and `style`)
 
 
 

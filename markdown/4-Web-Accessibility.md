@@ -6,7 +6,9 @@ Web accessibility refers to the inclusive practice of designing and developing w
 
 **Inclusivity**: Web accessibility aims to ensure that everyone, including people with disabilities, can access and interact with websites. It emphasizes the removal of barriers that might prevent equal access and participation.
 
-**Disability categories**: Web accessibility encompasses a wide range of disabilities, including visual impairments, hearing impairments, mobility impairments, cognitive disabilities, and more. Understanding the challenges faced by users with different disabilities will help you design more inclusive websites.
+**Disability categories**: Web accessibility encompasses a wide range of disabilities,Web accessibility encompasses all disabilities that affect access to the Web, including auditory, cognitive, neurological, physical, speech and visual. Understanding the challenges faced by users with different disabilities will help you design more inclusive websites.
+
+**Other categories**: Web accessibility also benefits people without disabilities, for example: on mobile phones, smart watches, smart TVs, and other devices with small screens, different input modes, older people, temporary disabilities such as a broken arm, situational limitations such as bright sunlight or an environment where you can't listen to audio, even slow internet connection or expensive bandwidth
 
 **Standards and guidelines**: There are internationally recognized standards and guidelines that provide best practices for web accessibility. The Web Content Accessibility Guidelines (WCAG) is the most widely used and authoritative set of guidelines.
 
@@ -27,15 +29,33 @@ In addition to WCAG, it's worth exploring other resources and standards like the
 
 ## WCAG 2
 
-WCAG 2 is the current standard Web Content Accessibility Guidelines
+The W3C Web Accessibility Initiative (WAI) develops technical specifications, guidelines, techniques, and supporting resources that describe accessibility solutions. These are considered international standards for web accessibility.
+
+WCAG 2 is the current standard for Web Content Accessibility Guidelines
+
+WCAG 2.0 is also an ISO standard: ISO/IEC 40500
 
 
 
 
 
+## Examples
+
+#### Alt text for images
+
+Images should include alt text in the markup/code to make it accessible to use a screen reader as well as people who turn off images.
 
 
 
+#### Keyboard Input
+
+An accessible website does not rely on the mouse; it makes all functionality available from a keyboard. People with disabilities can then use assistive technologies that mimic the keyboard, such as speech input.
+
+
+
+#### Audio Transcripts
+
+Providing a text transcripts makes audio information accessible to people who are deaf or hard of hearing, as well as search engines and other technologies.
 
 
 
