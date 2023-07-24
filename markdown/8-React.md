@@ -790,6 +790,46 @@ NOTE when React.Strict mode is on.. React renders components twice (in dev but n
 
 
 
+Dependency array behaviors:
+
+```jsx
+useEffect(() => {
+  // This runs after every render
+});
+
+useEffect(() => {
+  // This runs only on mount (when component appears on the screen for the first time)
+}, [ ]);
+
+useEffect(() => {
+  // This runs on mount or if either a or b have changed since the last render
+}, [a, b]);
+```
+
+Recall that in development React remounts every component once immediately after its initial mount
+
+(each component is mounted twice in StrictMode)
+
+This should help you to recognize if you need to implement a cleanup function..
+
+```jsx
+  useEffect(() => {
+    const connection = createConnection();
+    connection.connect();
+    return () => {
+      connection.disconnect();
+    };
+  }, [ ]);
+```
+
+React will call your cleanup function before the Effect runs again, and when the component unmounts (is removed)
+
+The cleanup function should stop or undo whatever the Effect was doing. The rule of thumb is that the user shouldn't be able to distinguish between the Effect running once (as in production) and an effect → cleanup → effect sequence (as you'd see in development).
+
+
+
+Remember, you can't "choose" your dependencies - they are determined by the code inside the Effect.
+
 
 
 ## Props

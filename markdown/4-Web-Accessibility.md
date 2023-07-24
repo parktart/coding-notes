@@ -59,7 +59,174 @@ Providing a text transcripts makes audio information accessible to people who ar
 
 
 
+## Keyboard-navigable JavaScript widgets
+
+Widgets are typically composed of `<div>` and `<span>` elements which do not, by nature, offer keyboard functionality
+
+#### tabIndex
+
+`tabindex` html attribute = `tabIndex` in JSX
+
+By default, when people use the tab key to browse a webpage, only interactive elements (like links, form controls, buttons) get focused. Authors can add the `tabIndex` global attribute to other html elements to make them focusable too.
+
+The order in which elements gain focus when using a keyboard is, by default, the html source order. Authors may want to redefine the order by setting `tabIndex` to any positive number.
+
+`tabIndex = 0` element becomes focusable by keyboard and script
+
+`tabIndex = -1` element becomes focusable by script (with `element.focus()`)
+
+`tabIndex = 33` element becomes focusable by keyboard and script - tab order determined by number
+
+NOTE elements with a positive tabIndex are put before the default interactive elements on the page, which means page authors will have to set (and maintain) tabIndex values for all focusable elements on the page when one or more positive tabIndex values are used.
 
 
 
+#### Grouping controls
+
+For grouping widgets such as menus, tablists, grids, or tree views, the parent element should be in the tab order (tabindex="0"), and each descendant choice/tab/cell/row should be removed from the tab order (tabindex="-1"). Users should be able to navigate the descendant elements using arrow keys.
+
+
+
+## Accessibility in React
+
+
+
+Although standard HTML practices can be directly used in React, note that the `for` attribute is written as `htmlFor` in JSX:
+
+```jsx
+<label htmlFor="inputX">Name:</label>
+<input id="inputX" type="text" name="name"/>
+```
+
+
+
+#### Programmatically managing focus
+
+React applications continuously modify the HTML DOM during runtime, which can lead to keyboard focus being lost or set to an unexpected element. In this case we can programmatically set the keyboard focus. 
+
+To set focus in React, we can use Refs to DOM elements.
+
+```jsx
+import { useRef } from 'react';
+
+export default function Form() {
+  const inputRef = useRef(null);
+
+  function handleClick() {
+    inputRef.current.focus();
+  }
+
+  return (
+    <>
+      <input ref={inputRef} />
+      <button onClick={handleClick}>
+        Focus the input
+      </button>
+    </>
+  );
+}
+```
+
+
+
+By default React does not let a component access the DOM nodes of other components. Not even for its own children! This is intentional. Refs are an escape hatch that should be used sparingly. Manually manipulating *another* component's DOM nodes makes your code more fragile. However it can be done, for example, to reset keyboard focus to a button that opened a modal window after that modal window is closed.
+
+```jsx
+import { useRef } from "react";
+
+export default function Container() {
+    const buttonRef = useRef(null);
+
+    return (
+        <>
+            <button ref={buttonRef} onClick={() => setWidgetOpen(true)}>
+                Open Widge!
+            </button>
+            {widgetOpen && <Widget buttonRef={buttonRef} />}
+        </>
+    );
+};
+
+const Widget = ({ buttonRef }) => {
+    return (
+        <>
+            <h1>This is a widget!</h1>
+            <button
+              	autoFocus
+                onClick={() => {
+                    setWidgetOpen(false);
+                    buttonRef.current.focus(); // PROGRAMMATICALLY MANAGE FOCUS
+                }}>
+                Close
+            </button>
+        </>
+    );
+};
+```
+
+Here we gave accessed a *parent's* DOM element from a child. This is as simple as passing the ref down to the child, and using it there.
+
+Note, by default, you cannot set a `ref` on a component directly..
+
+```jsx
+<MyInput ref={inputRef} /> // error
+```
+
+But if we do want to allow for this, we can use the `forwardRef` API
+
+which also handles passing refs from child to parent elegantly..
+
+```jsx
+import { forwardRef, useRef } from 'react';
+
+export default function Form() {
+  const inputRef = useRef(null);
+
+  return (
+    <>
+      <MyInput ref={inputRef} />
+      <button onClick={() => inputRef.current.focus()}>
+        Focus the input
+      </button>
+    </>
+  );
+}
+
+const MyInput = forwardRef( (props, ref) => {
+  return <input ref={ref} />;
+});
+```
+
+Here we gave accessed a *child's* DOM element from a parent.
+
+And we can even use `forwardRef` to pass a ref up through multiple components..
+
+```jsx
+export default function Form() {
+  const ref = useRef(null);
+
+  return (
+    <form>
+      <FormField label="Enter your name:" ref={ref} isRequired={true} />
+      <button type="button" onClick={() =>  ref.current.focus()}>
+        Edit
+      </button>
+    </form>
+  );
+}
+
+const FormField = forwardRef((props, ref) => {
+  // ...
+  return (
+    <>
+      <MyInput ref={ref} />
+      ...
+    </>
+  );
+});
+
+const MyInput = forwardRef((props, ref) => {
+  return <input ref={ref} />;
+});
+```
 
