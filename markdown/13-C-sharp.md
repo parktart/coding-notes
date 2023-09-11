@@ -29,7 +29,7 @@ In C#, things can be either: **primitive/value** type or **non-primitive/referen
 
    - Non-primitive types are typically defined by the developer or provided by the .NET framework.
    - Examples of non-primitive types include `classes`, `structs`, `interfaces`, `arrays`, `strings`, `delegates`, etc
-   - When a variable is assigned a primitive/value type, it stores a reference to the memory location where the data is stored.
+   - When a variable is assigned a non-primitive/reference type, it stores a reference to the memory location where the data is stored.
    - When you assign a non-primitive type to another variable or pass it as a method parameter, the reference to the object is copied, not the actual object itself.
    - Non-primitive types are allocated on the heap, and variables of non-primitive types store references to their memory locations.
 
@@ -288,7 +288,7 @@ So adding `M` tells C# to *create* that number as a decimal (and then it can be 
 
 ```csharp
 decimal price = 19.99;  // Error: Cannot implicitly convert type 'double' to 'decimal'
-decimal price = 19.99M;  // no error
+decimal price = 19.99m;  // no error
 ```
 
 
@@ -393,7 +393,7 @@ string name = "Parker";
 char firstChar = name[0]; // "P"
 ```
 
-and because strings immutable we cannot change individual characters of a string object..
+and because strings are immutable we cannot change individual characters of a string object..
 
 ```csharp
 name[0] = 'D'; // will not run
@@ -506,7 +506,7 @@ let's create an object..
 Person person = new Person( );
 ```
 
-this creates a new object of class Person() that is of class Person() called person
+this creates a new object of class Person() and assigns it to a variable of class Person() called person
 
 
 
@@ -528,13 +528,7 @@ Also note string objects are immutable in C#.
 
 An immutable object is an object whose state (the values of its properties) cannot be modified after it is created. Once an immutable object is created, its state remains fixed throughout its lifetime.
 
-so we just use..
-
-```csharp
-string myString = "hi";
-```
-
-note we are not saying the myString variable is immutable (constant) but rather the string object "hi" is immutable
+Note we are not saying the myString variable is immutable (constant) but rather the string object "hi" is immutable
 
 ```csharp
 string myString = "hi";
@@ -551,7 +545,7 @@ ok back to creating an object of user-defined data type (class)..
 Person person = new Person( );
 ```
 
-this creates a new object of class Person() that is of class Person() called person
+this creates a new object of class Person() and assigns it to a variable of class Person() called person
 
 
 
@@ -614,7 +608,7 @@ STRUCT is PRIMITIVE
 
 A struct is not considered a data type itself but rather a value type that represents a composite structure. A struct defines the structure and behavior of instances of that struct.
 
-Structs are value types that contain data members (fields) and can also include methods and properties. They are typically used to represent small, lightweight objects that are commonly used to hold a few related values.
+Structs are value types that contain data members (fields) and can also include properties and methods. They are typically used to represent small, lightweight objects that are commonly used to hold a few related values.
 
 to declare a struct..
 
@@ -703,7 +697,7 @@ Console.WriteLine(number) // 5
 Declaring a constant variable:
 
 ```csharp
-const int myConst = 10;
+const int MyConst = 10;
 ```
 
 
@@ -852,8 +846,6 @@ C# operator types..
 ||
 !
 ```
-
-
 
 
 
