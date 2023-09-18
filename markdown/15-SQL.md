@@ -80,9 +80,9 @@ SELECT first_name FROM person ;
 
 `first_name` and `person` here are **identifiers** 
 
-`SELECT first_name` here is the **select clause** (select column)
+`SELECT first_name` here is the **select clause**
 
-`FROM person` here is the **from clause** (from table)
+`FROM person` here is the **from clause**
 
 
 
@@ -199,7 +199,7 @@ we can **alias** the table name
 SELECT p.first_name, p.last_name FROM person p ;
 ```
 
-qualifying each column and aliasing table names is a **best practice**!
+qualifying each column and aliasing table names is a **best practice**
 
 
 
@@ -230,13 +230,13 @@ note..
 SELECT DISTINCT p.first_name, p.last_name FROM person p ;
 ```
 
-will only return one row for each unique `first_name` `last_name` *combination*
+will return one row for each unique `first_name` `last_name` *combination*
 
 
 
 ## WHERE
 
-Filters our queries
+The WHERE Clause filters our queries
 
 ```sql
 SELECT p.first_name, p.last_name FROM person p
@@ -247,7 +247,7 @@ WHERE p.first_name = 'Jon' ;
 
 ### Operators
 
-`=` Equals
+`=` Equal to
 
 `<>` Not equal to
 
@@ -285,13 +285,29 @@ BETWEEN is **inclusive** (>= , <=)
 
 Is a sort of 'fuzzy' version of `=`
 
-we can use wildcards
+where we can use wildcards
 
 ```sql
 WHERE p.first_name LIKE 'J%' ;
 ```
 
-`%` anything
+`%` Represents zero or more characters
+
+`_` Represents a single character
+
+`[abcdef]` Represents any single character within the brackets *
+
+`[^abcdef]` Represents any single character **not** in the brackets *
+
+`[a-f]` Represents any single character within the specified range *
+
+`[^a-f]` Represents any single character **not** within the specified range *
+
+`{ }` Represents any escaped character **
+
+\* Not supported in PostgreSQL and MySQL databases
+
+** Supported only in Oracle databases
 
 #### IN
 
@@ -337,7 +353,7 @@ Sorts a result set
 
 Can specify one or more columns to order by (will order by the first one, then order by again, and again, etc)
 
-ASC (default) or DESC - ascending or descending
+ASC (ascending - default) or DESC (descending)
 
 ```sql
 SELECT p.first_name, p.last_name FROM person p
@@ -356,7 +372,7 @@ Often used with DISTINCT
 
 `COUNT`
 
-Returns number of rows for a specified column (number of rows that are not NULL)
+Returns number of rows for a specified column (number of rows with a non-NULL value in that column)
 
 ```sql
 SELECT COUNT(*) FROM person p ;
@@ -423,7 +439,7 @@ SELECT COUNT(DISTICT p.first_name) FROM person p ;
 
 #### GROUP BY
 
-Allows multiple columns in a set function
+Allows us to run a set function on multiple columns
 
 Breaks result set into subsets
 
@@ -513,7 +529,7 @@ INNER JOIN email_address e
 ON p.person_guid = e.person_guid ;
 ```
 
-will exclude rows where there is no match (will exclude NULL values)
+INNER JOIN excludes rows where there is no match (will exclude NULL values)
 
 | First Name | Last Name | Email Address        |
 | ---------- | --------- | -------------------- |
@@ -585,6 +601,8 @@ ON p.person_guid = e.person_guid ;
 
 `UNION` is a sort of join that allows you to combine tables/result sets into one table/result set with all rows
 
+No merging takes place, the rows are simply 'stacked'
+
 If there may be repeated rows, you can add DISTINCT
 
 ```sql
@@ -641,7 +659,7 @@ notice how we didn't specify the `Key` as it is auto generated
 
 Can insert multiple rows
 
-With multiple values lists..
+With multiple value lists..
 
 ```sql
 INSERT INTO person p
