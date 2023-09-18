@@ -732,7 +732,202 @@ WHERE p.person_id = 2 ;
 
 
 
+## Creating Databases/Tables
 
+#### DDL
+
+Data Definition Language (DDL)
+
+is a subset of SQL for creating databases and tables
+
+
+
+### Database Creation
+
+Database creation is actually not part of the SQL standard (specific to each implementation)
+
+Most Database Management Systems have a GUI for executing DDL (creating databases/tables)
+
+For example we can create databases in SQL Server using Visual Studio 'Publish' GUI
+
+
+
+I don't think we use the following in Visual Studio solutions, and instead the database to use is handled by the connection string?
+
+```sql
+CREATE DATABASE Contacts ;
+```
+
+ 
+
+```sql
+USE DATABASE Contacts ;  -- all subsequent queries will be scoped to this DB
+SELECT * FROM person p ;
+```
+
+or
+
+```sql
+SELECT * FROM Contacts.person p ;
+```
+
+
+
+### Table Creation
+
+Table creation is part of the SQL standard
+
+ Define table name, column names and their types
+
+```sql
+CREATE TABLE email_address
+ (
+    email_address_id INTEGER,
+   person_id INTEGER,
+   email_address VARCHAR(55)
+ ) ;
+```
+
+
+
+### Standard SQL Data Types
+
+`CHARACTER` can hold N characters
+
+`CHARACTER VARYING` can hold up to N characters (inclusive)
+
+`BINARY` holds hexadecimal data
+
+`SMALLINT` (-32,768) to (32,767)
+
+`INTEGER` (-2,147,483,648) to (2,147,483,647)
+
+`BIGINT` (-9,223,372,036,854,775,808) to (9,223,372,036,854,775,807)
+
+`BOOLEAN` true or false
+
+`DATE` YYYY-MM-DD
+
+`TIME` HH:MM:SS.f where F is the fractional seconds
+
+​	The fractional second is dealt with differently in different DB systems..
+
+​	SQL Server uses `TIME(n)`, where `n` is the precision of the fractional seconds, ranging from 0 (no fractional seconds) to 
+
+​	7 (100 nanoseconds). For example, `TIME(3)` would be in the format `HH:MM:SS.fff`
+
+​	Example: `13:45:55.123` represents 1:45:55 PM and 123 milliseconds
+
+`TIMESTAMP` both DATE and TIME
+
+
+
+### NULL Values
+
+NULL indicates a lack of a value
+
+Columns can be required (cannot be NULL) or not required (can be NULL)
+
+```sql
+CREATE TABLE email_address
+ (
+    email_address_id INTEGER NOT NULL,
+   person_id INTEGER,
+   email_address VARCHAR(55) NOT NULL
+ ) ;
+```
+
+
+
+### Keys
+
+PRIMARY KEY column - must have a unique value per row (cannot be NULL)
+
+```sql
+CREATE TABLE email_address
+ (
+    email_address_id INTEGER NOT NULL PRIMARY KEY,
+   person_id INTEGER,
+   email_address VARCHAR(55) NOT NULL
+ ) ;
+```
+
+
+
+### Constraints
+
+Constrains allow you to add the constraints (NOT NULL, PRIMARY KEY, etc) at the end of the table definition, rather than inline
+
+```sql
+CREATE TABLE email_address
+ (
+    email_address_id INTEGER NOT NULL,
+   person_id INTEGER,
+   email_address VARCHAR(55) NOT NULL,
+   CONSTRAINT PK_email_address PRIMARY KEY (email_address_id)
+ ) ;
+```
+
+It is convention to name the constraint PK_ or FK_ but it could be named anything..
+
+```sql
+CONSTRAINT Foo PRIMARY KEY (<column_name>)
+```
+
+```sql
+CONSTRAINT PK_<column_name> PRIMARY KEY (<column_name>)
+```
+
+```sql
+CONSTRAINT FK_<column_name> FOREIGN KEY (<column_name>)
+```
+
+
+
+### Altering Tables
+
+Used to change an existing table while it is live in your DB
+
+Add/remove columns
+
+Change a column's data type
+
+Change column constraints
+
+But it must align with current data!
+
+```sql
+ALTER TABLE email_address
+ADD CONSTRAINT FK_person_id FOREIGN KEY (person_id)
+REFERENCES person (person_id) ;
+```
+
+which we could have of course just defined in our original table definition..
+
+```sql
+CREATE TABLE email_address
+ (
+    email_address_id INTEGER NOT NULL,
+    person_id INTEGER,
+    email_address VARCHAR(55) NOT NULL,
+    CONSTRAINT PK_email_address PRIMARY KEY (email_address_id),
+    CONSTRAINT FK_person_id FOREIGN KEY (person_id) REFERENCES person (person_id)
+ );
+```
+
+
+
+### DELETING TABLES
+
+This is permenant!
+
+Removes table and all data from the database
+
+Will throw an **error** if any of it's columns are referenced as foreign keys in another table
+
+```sql
+DROP TABLE person ;
+```
 
 
 
