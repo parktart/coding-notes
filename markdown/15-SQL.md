@@ -2,8 +2,6 @@
 
 
 
-
-
 ## Intro
 
 SQL has ANSI and ISO standards - so each Relational Database Management System (RDMS) must implement *at least* the standard functionality of SQL
