@@ -2,8 +2,6 @@
 
 
 
-NOTE Microsoft provides many free resources and tutorials for learning about C#, SQL Server, and LocalDB
-
 ### C#
 
 C# is similar to Java and C++ (is an object-oriented language)
@@ -26,23 +24,51 @@ additionally C# can be used for cross-platform development - allowing developers
 
 ### .NET
 
-.NET is a free, open-source framework developed by Microsoft that allows developers to create a variety of applications, including web, desktop, mobile, and gaming using multiple programming languages such as C#
+.NET serves as an umbrella term for Microsoft's entire suite of software development technologies, including frameworks, libraries, and runtime environments.
+
+This set of free and open-source technologies allows developers to create a variety of applications, including web, desktop, mobile, and gaming using multiple programming languages such as C#, Visual Basic, and F#
 
 .NET provides a large class library, language interoperability, garbage collection, and other features to simplify and accelerate application development
 
 It also includes a runtime environment called the Common Language Runtime (CLR), which provides services such as memory management, type safety, and exception handling
 
-.NET supports both the Windows operating system and cross-platform development using .NET Core, which is a modular, open-source, and cross-platform version of the .NET Framework that runs on Windows, Linux, and macOS
+.NET Framework, ASP.NET, and ASP.NET Core all fall under the .NET ecosystem
+
+
+
+### .NET Framework
+
+.NET Framework was the original framework in the .NET ecosystem, primarily designed for creating Windows-based applications
+
+ASP.NET, a component of .NET Framework, was tailored for building dynamic web pages and web applications
+
+Over time, .NET Framework's community has matured, but its growth is seen as limited due to its Windows-centric nature. It's perceived as becoming obsolete compared to newer platforms in the .NET ecosystem, with Microsoft now only providing security and reliability updates for it
 
 
 
 ### ASP.NET
 
-ASP.NET is a web framework built on top of the .NET Framework that is specific to web development
+ASP.NET is a framework for developing web applications and services
 
-It provides a range of features and tools for building web forms, MVC, and Web API applications
+Initially part of the .NET Framework, it has evolved over time, but ASP.NET has been widely used for building web applications since the early 2000s
 
-C# is one of the most popular languages for building web applications with ASP.NET due to its performance, productivity, and integration with the .NET Framework.
+ASP.NET Core was a redesign of ASP.NET, this next-generation version of ASP.NET represents a significant departure from the previous ASP.NET framework
+
+Cross-platform and open source, ASP.NET Core can run on Windows, macOS, and Linux
+
+and introduced a more modular and lightweight architecture
+
+ASP.NET Core also includes support for building not only web applications but also cross-platform desktop applications and cloud-based microservices
+
+
+
+### .NET Core and .NET 5/6
+
+.NET Core is a cross-platform, high-performance framework for building modern, cloud-based, internet-connected applications, including web, mobile, desktop, gaming, IoT, and AI applications. It's seen as a successor to .NET Framework with a focus on modularity, performance, and cross-platform support
+
+With the advent of .NET 5 and .NET 6, Microsoft aims to unify the .NET ecosystem, bringing together the best of .NET Framework, .NET Core, and Mono/Xamarin under a single runtime and framework with interoperable libraries
+
+.NET 6 continues the vision of unifying the platform, offering superior performance, compatibility, and features suitable for a broad array of application types
 
 
 
@@ -54,9 +80,9 @@ SQL is widely used in various industries and applications for managing and query
 
 
 
-### PostreSQL
+### PostgreSQL
 
-PostgreSQL, often referred to as Postgres, is a popular open-source relational database management system (RDBMS) that follows the SQL standards closely. It is known for its robustness, reliability, and advanced features.
+PostgreSQL, often referred to as just 'Postgres', is a popular open-source relational database management system (RDBMS) that follows the SQL standards closely. It is known for its robustness, reliability, and advanced features.
 
 PostgreSQL fully supports SQL and adheres to the SQL standards. It provides a comprehensive set of SQL commands for data manipulation, querying, and database management, including SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, and DROP statements.
 
@@ -68,13 +94,13 @@ PLV8 is an extension for the PostgreSQL database system that enables the executi
 
 ### Visual Studio
 
-Visual Studio is an IDE (integrated development environment) primarily designed for developing Windows applications
+Visual Studio is an IDE (integrated development environment) primarily designed for with the .NET ecosystem
 
 Visual Studio provides a rich set of features for building, testing, debugging, and deploying software applications
 
-both Visual Studio and VSCode can be used for C# development, but Visual Studio is the more powerful and feature-rich option, especially for large-scale software development projects 
+both Visual Studio and VSCode can be used for C# development, but Visual Studio is the more powerful and feature-rich option, especially for large-scale software development projects
 
-VSCode is a popular choice for smaller projects or cross-platform development using .NET Core
+VSCode is a popular choice for smaller projects or cross-platform development
 
 
 

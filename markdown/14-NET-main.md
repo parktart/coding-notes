@@ -1,8 +1,18 @@
-# NET Core
+# .NET Development
 
 
 
-## Kestrel (C#) vs React (node) Dev Server
+
+
+## .NET web development
+
+
+
+
+
+## .NET and React
+
+#### Kestrel (C#) vs React (node) Dev Server
 
 in an ASP.NET Core with React.js web app
 

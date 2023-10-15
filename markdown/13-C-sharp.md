@@ -38,21 +38,21 @@ In C#, things can be either: **primitive/value** type or **non-primitive/referen
 Example:
 
 ```csharp
-// Primitive/Value
+// Primitive/Value type
 int x = 10;
 int y = x; // y is assigned the value of x
 x = 20; 
 Console.WriteLine(x); // 20
 Console.WriteLine(y); // 10
 
-// Non-Primitive/Reference
+// Non-Primitive/Reference type
 int[] array1 = { 1, 2, 3 };
 int[] array2 = array1; // array2 references the same array as array1
 
-array1[0] = 10; 
+array1[0] = 88; 
 
-Console.WriteLine(array1[0]); // 10
-Console.WriteLine(array2[0]); // 10
+Console.WriteLine(array1[0]); // 88
+Console.WriteLine(array2[0]); // 88
 ```
 
 
