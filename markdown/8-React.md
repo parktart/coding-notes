@@ -157,7 +157,7 @@ It's kind of a mess, so use Sass and Bootstrap, detailed below.
 
 beyond CSS Modules, you can use a CSS Preprocessor like Sass (SCSS)
 
-Sass (SCSS): Sass (or SCSS) is a widely used CSS preprocessor that provides features like variables, nesting, mixins, and more. It allows you to write modular and reusable styles. Create React App supports Sass out of the box, so you can use `.scss` files and leverage Sass features.
+Sass (or SCSS) is a widely used CSS preprocessor that provides features like variables, nesting, mixins, and more. It allows you to write modular and reusable styles. Create React App supports Sass out of the box, so you can use `.scss` files and leverage Sass features.
 
 [About scss](https://www.robinwieruch.de/create-react-app-with-sass-support/)
 
@@ -251,6 +251,7 @@ In React, you write comments within curly brackets and /* */
 ```jsx
 render() {
     return (
+      	{/* This is a comment in JSX */}
         <div className="App">
         Hello World!
         </div>
@@ -802,7 +803,7 @@ useEffect(() => {
 }, [ ]);
 
 useEffect(() => {
-  // This runs on mount or if either a or b have changed since the last render
+  // This runs on mount and if either a or b have changed since the last render
 }, [a, b]);
 ```
 
