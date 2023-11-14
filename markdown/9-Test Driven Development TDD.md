@@ -44,7 +44,7 @@ For example, if you're testing a function that gets information from a DOM input
 
 Setting up Jest: https://jestjs.io/docs/getting-started
 
-Note Jest (as well as Babel and ESLint) come preconfigured with `create-react-app`
+Note **Jest** (as well as **Babel** and **ESLint**) come preconfigured with `create-react-app`
 
 
 
@@ -88,18 +88,18 @@ And add to your `package.json`..
 
 Now when you run `npm test` in your repo it will run all jest tests it finds
 
-Additionally, if you want to have `npm test` run every time you save a `.js` file you can add to your `package.json`..
+Additionally, if you want to have `npm test` run every time you save a file you can add to your `package.json`..
 
 ```json
 {
   "scripts": {
     "test": "jest",
-    "watch": "jest --watch *.js"
+    "watch": "jest --watchAll=true --color=true"
   }
 }
 ```
 
-Now run `npm run watch` and watch will be listening for every time you save a `.js` file
+Now run `npm run watch` and watch will be listening for every time you save a file
 
 
 
@@ -175,6 +175,190 @@ For floating point equality, use `toBeCloseTo` instead of `toEqual` to account f
 
 
 see [Jest Docs](https://jestjs.io/docs/getting-started) for more
+
+
+
+## Testing Setup
+
+When testing a React/Preact app using Jest as the test runner..
+
+- **Jest**: Acts as the test runner and framework. It's responsible for executing tests and providing functionalities like test organization, assertions, mocks, and spies.
+- **jsdom**: Serves as the testing environment within Jest for simulating a web browser's environment. This is crucial for testing JavaScript code that interacts with the DOM, as it allows such code to run in a Node.js environment as if it were running in a real browser.
+- **DOM Testing Library**: Provides utility functions and additional matchers to facilitate the testing of DOM nodes. It allows for more natural querying of the DOM, enabling tests to interact with the DOM in ways similar to how users would. It's framework-agnostic, meaning it can be used with plain JavaScript or any JavaScript framework that interacts with the DOM (like React).
+- **React Testing Library**: An extension of the DOM Testing Library, it is specifically tailored for testing React components. It abstracts the complexities of the React component tree, providing utilities to interact with and test React components in a user-centric way.
+- **Preact Testing Library**: Similar in functionality to React Testing Library but specifically designed for Preact. It provides a set of tools to render Preact components into a virtual DOM for testing and to interact with these components as users would. This library helps ensure that Preact components work as expected in a simulated browser environment provided by jsdom.
+- **jest-dom** is a companion library for DOM/React/Preact Testing Library that provides custom DOM element matchers for Jest. For example, instead of using a combination of generic Jest matchers to test a component's state, **jest-dom** provides matchers like `.toBeVisible()`, `.toHaveTextContent()`, and `.toHaveClass()`.
+
+In a React/Preact application using Jest for unit testing, this combination of tools enables a comprehensive testing strategy. Jest orchestrates the testing process, jsdom simulates the browser environment, and React/Preact Testing Library allows for effective, user-centric testing of React/Preact components.
+
+
+
+
+
+## DOM Testing Library
+
+[DOM Testing Library](https://testing-library.com/docs/dom-testing-library/intro)
+
+When testing your UI you want your tests to test functionality, rather than the code/implementation details. Changes and refactors to your implementation should not break these tests. The DOM Testing Library provides a way to do this.
+
+The `DOM Testing Library` is a very light-weight solution for testing DOM nodes. The main utilities it provides involve querying the DOM for nodes in a way that's similar to how the user finds elements on the page.
+
+As part of this goal, the utilities this library provides facilitate querying the DOM in the same way the user would. 
+
+- Finding form elements by their label text (just like a user would)
+- Finding links and buttons from their text (like a user would)
+- It also exposes a recommended way to find elements by a `data-testid` as an "escape hatch" for elements where the text content and label do not make sense or is not practical
+
+
+
+Note DOM Testing Library is the "core API" of the Testing Library family - the other libraries (with a few exceptions) re-export the full DOM Testing Library API, with additional methods built on top.
+
+
+
+## React Testing Library
+
+[React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
+
+React Testing Library builds on top of DOM Testing Library by adding APIs for working with React components.
+
+Projects created with create-react-app have React Testing Library set up out of the box (`@testing-library/react`)
+
+### Example
+
+```jsx
+import { render } from '@testing-library/react';
+import App from './App';
+
+test('renders App component', () => {
+  render(<App />); // will fail if App fails to render
+});
+
+test('renders App component', () => {
+  render(<App />);
+  screen.debug(); // will output the DOM HTML to the console - you can check this to see what is available for testing!
+});
+
+test('Checks for Hello', () => {
+  render(<App />);
+  screen.getByText('Hello'); // this will fail if no element on the screen has 'Hello' but this isn't very explicit
+});
+
+test('Checks for Hello Explicitly', () => {
+  render(<App />);
+  expect(screen.getByText('Hello')).toBeInTheDocument(); // more explicit
+});
+
+// you can also check for sub-strings with regex or exact: false
+screen.getByText(/ello/);
+screen.getByText(/ello/i); // case-insensitive
+screen.getByText('ello', { exact: false }); // case-insensitive
+ 
+
+// you can also select elements by their accessibility role with React Testing Library
+
+test('Show Available Roles', () => {
+  render(<App />);
+  screen.getByRole(' '); // this will sow all the selectable roles in the component
+});
+```
+
+
+
+### Search Variants
+
+You'll notice React Testing Library has three search variants..
+
+1. `getBy` returns an element or an error
+2. `queryBy` returns an element or `null` - making it possible to check for elements that *shouldn't* be there
+3. `findBy` is used for asynchronous elements that will be there eventually
+
+
+
+So if you are asserting that an element isn't there, use `queryBy`, otherwise default to `getBy`
+
+```jsx
+test('Check that something isnt there, () => {
+  render(<App />);
+  expect(screen.queryByText('Something')).toBeNull();
+});
+```
+
+
+
+`findBy`
+
+For example, if..
+
+- after its initial render, the App component fetches a user from a simulated API
+- the API returns a JavaScript promise which immediately resolves with a user object
+- and the component stores the user from the promise in the component's state
+- the component updates and re-renders at which point the component should render "Signed in as: user" 
+
+```jsx
+const getUser = () => {
+  return Promise.resolve({ id: '1', name: 'Robin' });
+};
+
+const App = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const user = await getUser();
+      setUser(user);
+    };
+    loadUser();
+  }, []);
+
+  return (
+    <div>
+      {user ? <p>Signed in as {user.name}</p> : null}
+    </div>
+  );
+}
+```
+
+If we want to test the component over the stretch of its first render to its second render due to the resolved promise, we have to write an async test, because we have to wait for the promise to resolve asynchronously. 
+
+In other words, we have to wait for the user to be rendered after the component updates for one time after fetching it:
+
+```jsx
+test('Displays Signed in as', async () => {
+    render(<App />);
+    expect(screen.queryByText(/Signed in as/)).toBeNull();
+    expect(await screen.findByText(/Signed in as/)).toBeInTheDocument();
+});
+```
+
+So for any element that isn't there yet but will be there eventually, use `findBy`
+
+React Testing Library is designed to work seamlessly with React so
+
+when you use `findBy` queries, they automatically wait for the next DOM update
+
+this means if a state update causes a re-render, `findBy` will wait for this re-render to check for the element again
+
+or `findBy` just continually checks for 1000ms - either way it's magic
+
+
+
+### Events
+
+We can use RTL's `fireEvent` and `waitFor` functions to simulate interactions of an end user
+
+```jsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import App from './App';
+
+test('Fire an event', () => {
+  render(<App />);
+  screen.debug();
+  fireEvent.change(screen.getByRole('textbox'), {
+    target: { value: 'JavaScript' },
+  });
+  screen.debug();
+});
+```
 
 
 
