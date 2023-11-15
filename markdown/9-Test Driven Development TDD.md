@@ -105,7 +105,7 @@ Now run `npm run watch` and watch will be listening for every time you save a fi
 
 #### Common implementation
 
-Note `sum.js` in this case is server-side code (Node.js environment, not browser). Jest runs in Node.js environment so in order to allow testing of client-side modules you would need to bundle them with a module bundler like Webpack or Rollup.
+Note `sum.js` in this case is server-side code (Node.js environment, not browser). Jest runs in Node.js environment so in order to allow testing of **client-side** modules you would need to bundle them with a module bundler like Webpack or Rollup.
 
 So testing client-side JavaScript code with Jest is actually quite common, and Jest is a versatile testing framework that can handle both server-side and client-side JavaScript.
 
@@ -193,8 +193,6 @@ In a React/Preact application using Jest for unit testing, this combination of t
 
 
 
-
-
 ## DOM Testing Library
 
 [DOM Testing Library](https://testing-library.com/docs/dom-testing-library/intro)
@@ -207,7 +205,7 @@ As part of this goal, the utilities this library provides facilitate querying th
 
 - Finding form elements by their label text (just like a user would)
 - Finding links and buttons from their text (like a user would)
-- It also exposes a recommended way to find elements by a `data-testid` as an "escape hatch" for elements where the text content and label do not make sense or is not practical
+- It also exposes a way to find elements by a `data-testid` attribute as an "escape hatch" for elements where the text content and label do not make sense or is not practical
 
 
 
@@ -229,21 +227,21 @@ Projects created with create-react-app have React Testing Library set up out of 
 import { render } from '@testing-library/react';
 import App from './App';
 
-test('renders App component', () => {
+test('render App component', () => {
   render(<App />); // will fail if App fails to render
 });
 
-test('renders App component', () => {
+test('show debug output', () => {
   render(<App />);
   screen.debug(); // will output the DOM HTML to the console - you can check this to see what is available for testing!
 });
 
-test('Checks for Hello', () => {
+test('Check for Hello', () => {
   render(<App />);
-  screen.getByText('Hello'); // this will fail if no element on the screen has 'Hello' but this isn't very explicit
+  screen.getByText('Hello'); // this will fail if no element on the screen has 'Hello', but this isn't very explicit
 });
 
-test('Checks for Hello Explicitly', () => {
+test('Check for Hello Explicitly', () => {
   render(<App />);
   expect(screen.getByText('Hello')).toBeInTheDocument(); // more explicit
 });
@@ -252,7 +250,6 @@ test('Checks for Hello Explicitly', () => {
 screen.getByText(/ello/);
 screen.getByText(/ello/i); // case-insensitive
 screen.getByText('ello', { exact: false }); // case-insensitive
- 
 
 // you can also select elements by their accessibility role with React Testing Library
 
@@ -285,7 +282,7 @@ test('Check that something isnt there, () => {
 
 
 
-`findBy`
+Using `findBy`
 
 For example, if..
 
@@ -344,7 +341,9 @@ or `findBy` just continually checks for 1000ms - either way it's magic
 
 ### Events
 
-We can use RTL's `fireEvent` and `waitFor` functions to simulate interactions of an end user
+#### fireEvent API
+
+We can use `fireEvent` functions to simulate changes to our app
 
 ```jsx
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -354,11 +353,191 @@ test('Fire an event', () => {
   render(<App />);
   screen.debug();
   fireEvent.change(screen.getByRole('textbox'), {
-    target: { value: 'JavaScript' },
+    target: { value: 'Some text' },
   });
   screen.debug();
 });
 ```
+
+if you have asynchronous functions happening in your component, you may need to `waitFor` them to finish before testing..
+
+```jsx
+test('Wait to test', () => {
+  render(<App />);
+  fireEvent.change(screen.getByRole('textbox'), {
+    target: { value: 'Some text' },
+  });
+  waitFor(() =>
+      expect(
+        screen.getByText('Some text')
+      ).toBeInTheDocument()
+    );
+});
+```
+
+
+
+#### userEvent API
+
+The `userEvent` API mimics the actual browser behavior more closely than the `fireEvent` API
+
+For example, a `fireEvent.change()` triggers only a `change` event whereas `userEvent.type` triggers a `change` event, but also `keyDown`, `keyPress`, and `keyUp` events.
+
+```jsx
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import App from './App';
+
+test('User event', async () => {
+  render(<App />);
+  expect(screen.queryByText('Some text')).toBeNull();
+  await userEvent.type(screen.getByRole('textbox'), 'Some text');
+  expect(
+    screen.getByText('Some text')
+  ).toBeInTheDocument();
+});
+```
+
+Whenever possible, use userEvent over fireEvent when using React Testing Library
+
+
+
+### Callback Handlers
+
+Let's test the callback handlers for this Search component
+
+```jsx
+const Search = ({ value, onChange, children }) => {
+  return (
+    <div>
+      <label htmlFor="search">{children}</label>
+      <input
+        id="search"
+        type="text"
+        value={value}
+        onChange={onChange}
+      />
+    </div>
+  );
+}
+
+export default Search;
+```
+
+We will use a utility from Jest/Vitest to mock the `onChange` function which is passed to the component as props
+
+```jsx
+test('Call the onChange callback handler', () => {
+    // Jest
+    const onChange = jest.fn();
+    // Vitest
+    const onChange = vi.fn();
+
+    render(
+      <Search value="" onChange={onChange}>
+        Search:
+      </Search>
+    );
+
+    await userEvent.type(screen.getByRole('textbox'), 'Hello');
+    expect(onChange).toHaveBeenCalledTimes(5); // every key stroke
+  });
+```
+
+
+
+Let's test data fetching in React with axios
+
+```jsx
+import axios from 'axios';
+
+const URL = 'http://hn.algolia.com/api/v1/search';
+
+function App() {
+  const [stories, setStories] = React.useState([]);
+  const [error, setError] = React.useState(null);
+
+  async function handleFetch(event) {
+    let result;
+
+    try {
+      result = await axios.get(`${URL}?query=React`);
+      setStories(result.data.hits);
+    } catch (error) {
+      setError(error);
+    }
+  }
+
+  return (
+    <div>
+      <button type="button" onClick={handleFetch}>
+        Fetch Stories
+      </button>
+
+      {error && <span>Something went wrong ...</span>}
+
+      <ul>
+        {stories.map((story) => (
+          <li key={story.objectID}>
+            <a href={story.url}>{story.title}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+```
+
+On button click, we are fetching a list of stories from the Hacker News API.
+
+If everything goes right, we will see the list of stories rendered as list in React.
+
+If something goes wrong, we will see an error.
+
+```jsx
+import axios from 'axios';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import App from './App';
+
+// Jest
+jest.mock('axios');
+// Vitest
+vi.mock('axios');
+
+test('Fetch stories', async () => {
+  const stories = [
+    { objectID: '1', title: 'Hello' },
+    { objectID: '2', title: 'React' },
+  ];
+  
+  axios.get.mockImplementationOnce(() =>
+    Promise.resolve({ data: { hits: stories } })
+  );
+  render(<App />);
+  await userEvent.click(screen.getByRole('button'));
+  const items = await screen.findAllByRole('listitem');
+  expect(items).toHaveLength(2);
+});
+
+test('Fetch error', async () => {
+  axios.get.mockImplementationOnce(() =>
+    Promise.reject(new Error())
+  );
+  render(<App />);
+  await userEvent.click(screen.getByRole('button'));
+  const message = await screen.findByText(/Something went wrong/);
+  expect(message).toBeInTheDocument();
+});
+```
+
+Before we rendered the App component, we made sure mock the API
+
+by mocking the return value of axios' get method
+
+
 
 
 
