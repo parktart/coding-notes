@@ -118,6 +118,24 @@ and use the `defer` attribute so that they don't block your browser from parsing
 
 
 
+## Consistent Formatting
+
+When writing a JavaScript application, ensuring consistent formatting and adhering to best practices can be achieved through several tools and style guides.
+
+1. Use an **.editorconfig** file to help maintain consistent coding styles for multiple developers working on the same project across various editors and IDEs.
+2. **ESLint** is a popular linter for JavaScript. ESLint helps in identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs. It's highly configurable, allowing you to customize rules or use presets from popular style guides.
+3. **Prettier** is an opinionated code formatter that supports many languages, including JavaScript. It enforces a consistent style by parsing your code and re-printing it with its own rules, wrapping code when necessary.
+4. **Style Guides**:
+   - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) - one of the most popular JavaScript style guides
+   - [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html) - another popular JavaScript style guide
+   - [StandardJS](https://github.com/standard/standard) - an opinionated style guide with a linter and automatic code formatter
+
+
+
+[The Odin Project Linting](https://www.theodinproject.com/lessons/node-path-javascript-linting)
+
+
+
 ## Variables
 
 #### Let
@@ -3252,7 +3270,7 @@ myArray; // "hello", "item2", "item3"
 
 
 
-**arrays** are data type **object** but should be thought of somewhat seperately from objects
+**arrays** are data type **object** but should be thought of somewhat separately from objects
 
 **objects** use **keys** to access their "members"
 
@@ -3603,7 +3621,7 @@ some DOM methods..
 
 
 
-**Create Element**
+#### Create Element
 
 ```javascript
 document.createElement(tagName, [options]); // create new element with tag-type tagName
@@ -3619,7 +3637,7 @@ you place the element on the page with the append method (below)
 
 
 
-**Append Element**
+#### Append Element
 
 ```javascript
 parentNode.appendChild(childNode); // append childNode as the last child of parentNode
@@ -3635,7 +3653,7 @@ body.insertBefore(newDiv, btn)
 
 
 
-**Remove Element**
+#### Remove Element
 
 ```javascript
 parentNode.removeChild(child); // removes child from parentNode and returns a reference to child
@@ -3643,37 +3661,7 @@ parentNode.removeChild(child); // removes child from parentNode and returns a re
 
 
 
-**Altering Elements**
-
-```javascript
-const newDiv = document.createElement('div');                     
-// creates a new div referenced by the variable 'newDiv'
-
-newDiv.style.color = 'blue';                                      
-// add the indicated style rule
-
-newDiv.style.cssText = 'color: blue; background-color: white;';          
-// add several style rules - any previous styles set with javascript will be overwritten
-
-newDiv.setAttribute('style', 'color: blue; background-color: white;');    
-// add several style rules - any previous styles set with javascript will be overwritten
-```
-
-note we can **get** the current style with..
-
-```javascript
-console.log(newDiv.style.color); // 'blue' - only works for styles previously set with javascript
-```
-
-and **remove** the current style with..
-
-```javascript
-newDiv.style.color = ''; // only afects styles previously set with javavascript
-```
-
-
-
-**Editing Attributes**
+#### Editing HTML Attributes
 
 ```javascript
 newDiv.setAttribute('id', 'coolDiv'); // note these are html element attributes like id, class, src,
@@ -3686,27 +3674,7 @@ newDiv.removeAttribute('id');
 
 
 
-**CSS Classes**
-
-```javascript
-newDiv.classList.add('new');                                      
-// adds class "new" to newDiv
-
-newDiv.classList.remove('new');                                   
-// removes class "new" from newDiv
-
-newDiv.classList.toggle('make-blue');                                
-// if newDiv doesn't have class "make-blue" then add it, or if
-// it does, remove it
-
-newDiv.classList.add('sup', 'cool', 'fun'); // syntax for multiple entries
-```
-
-*it is best practice and usually cleaner to use a CSS class rather than adding/removing inline CSS
-
-
-
-**Adding Text and HTML Content**
+#### Adding Text and HTML Content
 
 ```javascript
 newDiv.textContent = 'Hello World!';
@@ -3726,9 +3694,154 @@ note there is also `innerText` which approximates the text the user would get fr
 
 
 
+## Altering CSS
+
+```javascript
+const newDiv = document.createElement('div');                     
+// creates a new div referenced by the variable 'newDiv'
+
+newDiv.style.color = 'blue';                                      
+// set an inline style property of an element
+
+newDiv.style.cssText = 'color: blue; background-color: white;';          
+// completely override the existing inline style
+
+newDiv.style.cssText += 'color: blue; background-color: white;';
+// add to the existing inline style
+
+newDiv.setAttribute('style', 'color: blue; background-color: white;');    
+// alternative way to completely override the existing inline style
+```
+
+note we can **get** the current *inline* style with..
+
+```javascript
+console.log(newDiv.style.color); // 'blue'
+```
+
+and **remove** the current *inline* style with..
+
+```javascript
+newDiv.style.color = 'red';
+```
+
+Link to some [common inline style properties](https://www.javascripttutorial.net/javascript-dom/javascript-style/#:~:text=common%20CSS%20properties).
+
+The `style` property returns the inline styles of an element. It is not very useful in practice because the `style` property doesn't return the rules that come from elsewhere, like styles from an external style sheet.
+
+
+
+To get all styles applied to an element, you should use the `window.getComputedStyle()` method.
+
+The `getComputedStyle()` method returns an object that contains the computed style of an element..
+
+```javascript
+const style = window.getComputedStyle( element [ ,pseudoElement ] );
+```
+
+`element` is the element that you want to return the computed styles for
+
+`pseudoElement` specifies the pseudo-element to match, it defaults to `null`
+
+
+
+To get the computed values of all CSS properties of a link with the hover state..
+
+```javascript
+const link = document.querySelector('a');
+const style = getComputedStyle(link,':hover');
+console.log(style);
+```
+
+The `getComputedStyle()` method returns a live style object which is an instance of the read-only `CSSStyleDeclaration` object.
+
+
+
+#### CSS classList
+
+Note it is best practice and usually cleaner to use a CSS class rather than adding/removing inline CSS..
+
+```javascript
+newDiv.classList.add('new');                                      
+// adds class "new" to newDiv
+
+newDiv.classList.remove('new');                                   
+// removes class "new" from newDiv
+
+newDiv.classList.toggle('make-blue');                                
+// if newDiv doesn't have class "make-blue" then add it, or if it does, remove it
+
+newDiv.classList.replace('oldClass', 'newClass');
+
+newDiv.classList.contains('someClass');
+// check that newDiv has class 'someClass'
+
+newDiv.classList.add('sup', 'cool', 'fun'); // syntax for multiple entries
+```
+
+
+
+#### Querying Width and Height
+
+To get an element's `width` and `height` (including **padding**) use the `clientWidth` and `clientHeight` properties
+
+```javascript
+let box = document.querySelector('.box');
+let width = box.clientWidth;
+let height = box.clientHeight;
+```
+
+
+
+To get an element's `width` and `height` (including **padding** and **border**) use the `offsetWidth` and `offsetHeight` properties
+
+```javascript
+let box = document.querySelector('.box');
+let width = box.offsetWidth;
+let height = box.offsetHeight;
+```
+
+
+
+To get an element's `width` and `height` as floating-point, after CSS transformation, use the `getBoundingClientRect()` method
+
+```css
+.box {
+  width: 100px;
+  height: 150px;
+  padding: 10px;
+  border: 1px;
+}
+```
+
+```javascript
+let box = document.querySelector('.box');
+let width = box.offsetWidth;
+let height = box.offsetHeight;
+console.log({ width, height });
+// {width: 122, height: 172}
+
+const domRect = box.getBoundingClientRect();
+console.log(domRect);
+// will return..
+DOMRect { 
+	x: 7.997685432434082,
+  y: 7.997685432434082,
+  width: 121.95602416992188,
+  height: 171.95602416992188,
+  top: 7.997685432434082,
+…}
+```
+
+
+
 ## Events
 
 events are actions that occur on the webpage such as mouse-clicks or keypresses
+
+
+
+### Event Handlers
 
 using JavaScript we can make our webpage listen and react to these events
 
@@ -3817,11 +3930,11 @@ function logColor(e) {
 
 
 
-List of Event Listener types [LINK](https://www.w3schools.com/jsref/dom_obj_event.asp) (like click, dblclick, keydown, keyup)
+List of Event Listener types [LINK](https://www.w3schools.com/jsref/dom_obj_event.asp) (`click`, `dblclick`, `keydown`, `keyup`, etc)
 
 
 
-**Grouping**
+#### Grouping
 
 there are a few ways to go about attaching lots of similar event listeners to a group of elements..
 
@@ -3849,39 +3962,166 @@ buttons.forEach((button) => {
 
 
 
-**Bubbling** - is the concept that when you click on an html element, you have also clicked on its container, and clicked on the html body and the entire html document - bc the element you clicked is nested *inside* all these things
+### DOM Event Flow
 
-so if we have 'click' Event Listeners on multiple layers of our html - we will trigger all of them by clicking the inner-most element
+**DOM Event Flow** - is an important concept that deals with the fact..
+
+When you click on an html element, you have also clicked on its container, and clicked on the html body and the entire html document - bc the element you clicked is nested *inside* all these things
+
+so if we have 'click' Event Listeners on multiple layers of our html - we may trigger all of them by clicking the inner-most element
 
 for example with some nested divs..
 
+```html
+<html>
+  <body>
+    <div>
+      <button>
+        Button
+      </button>
+    </div>
+  </body>
+</html>
+```
+
 ```javascript
-divs.forEach((div) => {
-  div.addEventListener('click', someFunc);
+const allElements = document.querySelectorAll('*');
+
+allElements.forEach((element) => {
+  element.addEventListener('click', someFunc);
 });
 ```
 
-we use an additional argument in `addEventListener()` to deal with this..
+When you click on the the inner-most element..
+
+<img src="./../objects-photos-etc/JavaScript-DOM-Level-2-Event.png" alt="DOM Level 2 Event flow" style="zoom:67%;" />
+
+DOM event flow has three phases:
+
+- First, event capturing occurs, which provides the opportunity to intercept the event.
+- Then, the actual target receives the event.
+- Finally, event bubbling occurs, which allows a final response to the event.
+
+
+
+By default, event capturing will not trigger your event listener code, but bubbling will..
 
 ```javascript
-div.addEventListener('click', someFunc); // run the function for all 'clicked on' elements
-										 // starting with the inner-most (clicked) element
+(all elements).addEventListener('click', someFunc); 
+// When #6 is clicked, run someFunc for all elements, in the order 6, 7 , 8 , 9, 10, 11
+```
 
-div.addEventListener('click', someFunc, capture: true); // run the function for all 'clicked on' elements
-														// starting with the outer-most element
 
-// if we only want to run the function for the exact element we clicked on
-// we add a line in someFunc to stop this propagation
 
-divs.forEach((div) => {
-  div.addEventListener('click', someFunc);
-});
+We can specify that we also want capturing to trigger our event listener code..
 
-function someFunc(e) {
+```javascript
+(all elements).addEventListener('click', someFunc, capture: true); 
+// When #6 is clicked, run someFunc for all elements, in the order 1, 2, 3, 4, 5, 6, 7 , 8 , 9, 10, 11
+```
+
+
+
+If we only want to run someFunc for the exact element that was clicked..
+
+```javascript
+const someFunc = (e) => {
     console.log("hi");
     e.stopPropagation(); // prevents bubbling!
 }
+
+(all elements).addEventListener('click', someFunc);
+// When #6 is clicked, run someFunc for only #6
 ```
+
+
+
+### Page Load Events
+
+When you open a page, the following events occur in sequence:
+
+- `DOMContentLoaded` - the browser has fully loaded HTML and completed building the DOM tree. 
+  - However, it hasn't loaded external resources like stylesheets and images.
+  - After this event, you can start selecting DOM nodes or initialize the interface.
+- `load` - the browser has fully loaded the HTML and also external resources like images and stylesheets.
+
+
+
+When you leave the page, the following events fire in sequence:
+
+- `beforeunload` - fires before the page and resources are unloaded.
+  - You can use this event to show a confirmation dialog to confirm if you really want to leave the page.
+  - This can be used to prevent data loss in case you are filling out a form.
+- `unload` - fires when the page has completely unloaded.
+  - You can use this event to send the analytics data or to clean up resources.
+
+
+
+To handle the page events, you can use the `addEventListener()` method:
+
+```javascript
+document.addEventListener('DOMContentLoaded',() => {
+    // handle DOMContentLoaded event
+});
+
+window.addEventListener('load',() => {
+    // handle load event
+});
+
+window.addEventListener('beforeunload',() => {
+    // handle beforeunload event
+});
+
+window.addEventListener('unload',() => {
+    // handle unload event
+});
+```
+
+
+
+To show a confirmation dialog to confirm before leaving the page..
+
+```javascript
+window.addEventListener('beforeunload', (e) => {
+    e.preventDefault();
+    e.returnValue = '';
+});
+// note custom messages are deprecated, and a standard message is now displayed
+```
+
+
+
+#### load
+
+For the `window` object, the `load` event is fired when the whole webpage (HTML) has loaded fully, including all dependent resources, including JavaScript files, CSS files, and images.
+
+You can act on the `load` event by registering an event listener..
+
+```javascript
+window.addEventListener('load', (e) => {
+    console.log('The page has fully loaded with all dependent resources');
+});
+```
+
+or by assigning your callback to the `onload` property of the `window` object..
+
+```javascript
+window.onload = (e) => {
+    console.log('The page has fully loaded with all dependent resources');
+};
+```
+
+
+
+The `load` event also fires on images.
+
+```javascript
+myImage.addEventListener('load', (e) => {
+    console.log('myImage has loaded');
+});
+```
+
+
 
 
 

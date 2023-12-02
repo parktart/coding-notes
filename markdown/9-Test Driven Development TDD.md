@@ -247,15 +247,16 @@ test('Check for Hello Explicitly', () => {
 });
 
 // you can also check for sub-strings with regex or exact: false
+
 screen.getByText(/ello/);
 screen.getByText(/ello/i); // case-insensitive
 screen.getByText('ello', { exact: false }); // case-insensitive
 
-// you can also select elements by their accessibility role with React Testing Library
+// you can also select elements by their accessibility role
 
 test('Show Available Roles', () => {
   render(<App />);
-  screen.getByRole(' '); // this will sow all the selectable roles in the component
+  screen.getByRole(' '); // this will show all the selectable roles in the component
 });
 ```
 
@@ -320,7 +321,7 @@ If we want to test the component over the stretch of its first render to its sec
 In other words, we have to wait for the user to be rendered after the component updates for one time after fetching it:
 
 ```jsx
-test('Displays Signed in as', async () => {
+test('Display Signed in as', async () => {
     render(<App />);
     expect(screen.queryByText(/Signed in as/)).toBeNull();
     expect(await screen.findByText(/Signed in as/)).toBeInTheDocument();
@@ -398,13 +399,13 @@ test('User event', async () => {
 });
 ```
 
-Whenever possible, use userEvent over fireEvent when using React Testing Library
+Whenever possible, use `userEvent` over `fireEvent` when using React Testing Library
 
 
 
 ### Callback Handlers
 
-Let's test the callback handlers for this Search component
+Let's test the callback handler for this Search component
 
 ```jsx
 const Search = ({ value, onChange, children }) => {
@@ -427,7 +428,7 @@ export default Search;
 We will use a utility from Jest/Vitest to mock the `onChange` function which is passed to the component as props
 
 ```jsx
-test('Call the onChange callback handler', () => {
+test('Call the onChange callback handler', async () => {
     // Jest
     const onChange = jest.fn();
     // Vitest
@@ -453,13 +454,12 @@ import axios from 'axios';
 
 const URL = 'http://hn.algolia.com/api/v1/search';
 
-function App() {
+const App = () => {
   const [stories, setStories] = React.useState([]);
   const [error, setError] = React.useState(null);
 
   async function handleFetch(event) {
     let result;
-
     try {
       result = await axios.get(`${URL}?query=React`);
       setStories(result.data.hits);
@@ -473,7 +473,7 @@ function App() {
       <button type="button" onClick={handleFetch}>
         Fetch Stories
       </button>
-
+      
       {error && <span>Something went wrong ...</span>}
 
       <ul>
@@ -492,7 +492,7 @@ export default App;
 
 On button click, we are fetching a list of stories from the Hacker News API.
 
-If everything goes right, we will see the list of stories rendered as list in React.
+If everything goes right, we will see the list of stories rendered as a list in React.
 
 If something goes wrong, we will see an error.
 
@@ -533,9 +533,17 @@ test('Fetch error', async () => {
 });
 ```
 
-Before we rendered the App component, we made sure mock the API
+Before we rendered the App component, we made sure to mock the API
 
 by mocking the return value of axios' get method
+
+
+
+
+
+
+
+
 
 
 
