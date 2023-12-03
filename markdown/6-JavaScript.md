@@ -3713,21 +3713,9 @@ newDiv.setAttribute('style', 'color: blue; background-color: white;');
 // alternative way to completely override the existing inline style
 ```
 
-note we can **get** the current *inline* style with..
-
-```javascript
-console.log(newDiv.style.color); // 'blue'
-```
-
-and **remove** the current *inline* style with..
-
-```javascript
-newDiv.style.color = 'red';
-```
-
 Link to some [common inline style properties](https://www.javascripttutorial.net/javascript-dom/javascript-style/#:~:text=common%20CSS%20properties).
 
-The `style` property returns the inline styles of an element. It is not very useful in practice because the `style` property doesn't return the rules that come from elsewhere, like styles from an external style sheet.
+The `style` property returns the *inline* styles of an element. It is not very useful in practice because the `style` property doesn't contain the rules that come from elsewhere, like styles from an external style sheet.
 
 
 
