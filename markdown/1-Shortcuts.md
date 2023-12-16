@@ -36,11 +36,15 @@ VSCode extensions: Prettier - Auto Rename Tag - x
 
 `Ctrl G` go to line
 
-`F12` go to (variable) definition
+`Ctrl Click` go to definition
 
-`Shift F12` show all references (to variable)
+`Ctrl K F` format selection
 
-`Alt F12` open (variable) definition in a new editor
+`Shift Alt H` show call heirarchy
+
+`Shift F12` peek references
+
+`F2` rename
 
 
 
@@ -58,19 +62,25 @@ VSCode extensions: Prettier - Auto Rename Tag - x
 
 
 
-`Fn <-- -->` jump to beginning/end of line
+`Fn <-- -->` jump to beginning/end of line (if `Home/End` are not on your keyboard)
 
-`Fn Shift <-- -->` highlight left/right
+`Home/End` jump to beginning/end of line 
+
+`Fn Shift <-- -->` highlight left/right (if `Home/End` are not on your keyboard)
+
+`Shift Home/End` highlight left/right
 
 `Ctrl <-- -->` jump to beginning/end of word
 
 `Ctrl Shift <-- -->` highlight word
 
+`Shift <-- -->` highlight character
+
 NEXT: Basic Editing
 
 
 
-`Ctrl Alt U` compare file to HEAD commit
+`Ctrl Alt U` compare file to HEAD commit (custom shortcut)
 
 
 
@@ -130,7 +140,7 @@ edit shortcuts: Tools > Options > Keyboard
 
 
 
-`Ctrl click` on a link to open in a new tab
+`Ctrl click` a link to open in a new tab
 
 
 
@@ -147,10 +157,6 @@ edit shortcuts: Tools > Options > Keyboard
 `Ctrl R` refresh page
 
 `Ctrl Shift R` refresh page, without using cache (complete and fresh reload from the server)
-
-
-
-`Ctrl 0` return to default zoom
 
 
 
@@ -226,7 +232,7 @@ when a CSS style value is selected.. for example `padding: 10px;` and `10px` is 
 
 
 
-any changes to CSS will be highlighted green (bc of Settings > Experiments > Sync CSS changes in the Styles Pane) and you can..
+any changes to CSS will be highlighted green (if Settings > Experiments > Sync CSS changes in the Styles Pane) and you can..
 
 `right click` anywhere in the Styles Pane > Copy all CSS changes
 
@@ -286,7 +292,37 @@ NEXT: Sources panel keyboard shortcuts
 
 ## Windows
 
+`Super` Open Start menu or Start screen
 
+`Super Tab` Open Task View (view all open windows)
+
+`Alt Tab` Switch between open windows
+
+`Super <-- -->` Snap current window to left or right of monitor
+
+`Super Shift <-- -->` Move current window between monitors
+
+
+
+`Super R` open the Run dialog box
+
+`Alt F4` if no windows are open, display shutdown options
+
+
+
+`PrtScr` or `Super Shift S` snipping tool (saved to clipboard)
+
+`Super PrtScr` full screenshot (saved to Pictures folder)
+
+`Alt + PrtScr` screenshot of currently active window (saved to clipboard)
+
+`Super G` open the Game Bar for screen recording (used primarily for recording game clips, but can be used for other applications).
+
+
+
+`Super + X, then C` (or `Super + X, then A` for Admin): Open Command Prompt or PowerShell.
+
+`Ctrl + Shift + Esc` : Open Task Manager.
 
 
 

@@ -3530,6 +3530,18 @@ for (const item of myArray) {
 
 
 
+## Objects
+
+Objects are a very important part of the JavaScript language.
+
+
+
+
+
+
+
+
+
 ## Test Driven Development TDD
 
 Test Driven Development (TDD) is a phrase you often hear in the dev world
@@ -3825,7 +3837,7 @@ DOMRect {
 
 ## Events
 
-events are actions that occur on the webpage such as mouse-clicks or keypresses
+events are actions that occur on the webpage such as mouse-clicks, keypresses, etc
 
 
 
@@ -3980,7 +3992,7 @@ allElements.forEach((element) => {
 });
 ```
 
-When you click on the the inner-most element..
+When you click on the inner-most element..
 
 <img src="./../objects-photos-etc/JavaScript-DOM-Level-2-Event.png" alt="DOM Level 2 Event flow" style="zoom:67%;" />
 
@@ -4028,20 +4040,16 @@ const someFunc = (e) => {
 
 When you open a page, the following events occur in sequence:
 
-- `DOMContentLoaded` - the browser has fully loaded HTML and completed building the DOM tree. 
-  - However, it hasn't loaded external resources like stylesheets and images.
-  - After this event, you can start selecting DOM nodes or initialize the interface.
-- `load` - the browser has fully loaded the HTML and also external resources like images and stylesheets.
+- `DOMContentLoaded`
+
+- `load`
 
 
 
-When you leave the page, the following events fire in sequence:
+When you leave/reload the page, the following events fire in sequence:
 
-- `beforeunload` - fires before the page and resources are unloaded.
-  - You can use this event to show a confirmation dialog to confirm if you really want to leave the page.
-  - This can be used to prevent data loss in case you are filling out a form.
-- `unload` - fires when the page has completely unloaded.
-  - You can use this event to send the analytics data or to clean up resources.
+- `beforeunload`
+- `unload`
 
 
 
@@ -4067,7 +4075,7 @@ window.addEventListener('unload',() => {
 
 
 
-To show a confirmation dialog to confirm before leaving the page..
+To show a confirmation dialog to confirm before leaving/reloading the page..
 
 ```javascript
 window.addEventListener('beforeunload', (e) => {
@@ -4079,9 +4087,27 @@ window.addEventListener('beforeunload', (e) => {
 
 
 
+Note with modern single-page applications (SPAs) using frameworks like React, there is no full page load/unload in the traditional sense. In React, events like `load` and `unload` do not fire during typical page transitions.
+
+
+
+#### DOMContentLoaded
+
+`DOMContentLoaded` - the browser has fully loaded and parsed the HTML and completed building the DOM tree. 
+
+- However, it hasn't loaded external resources like stylesheets and images.
+- If your JavaScript is in external files, these files are fetched and executed before the `DOMContentLoaded` event is fired, unless they are marked with `async` or `defer`.
+  - `async` scripts load asynchronously and execute as soon as they are downloaded, which can be before or after.
+  - `defer` scripts are executed after the HTML document is parsed but before the `DOMContentLoaded` event is fired.
+- After this event, you can start selecting DOM nodes or initialize the interface.
+
+
+
 #### load
 
-For the `window` object, the `load` event is fired when the whole webpage (HTML) has loaded fully, including all dependent resources, including JavaScript files, CSS files, and images.
+`load` - the browser has fully loaded the HTML and also external resources like stylesheets and images.
+
+For the `window` object, the `load` event is fired when the whole webpage (HTML) has loaded fully, including all dependent resources, like JavaScript files, CSS files, and images.
 
 You can act on the `load` event by registering an event listener..
 
@@ -4108,6 +4134,26 @@ myImage.addEventListener('load', (e) => {
     console.log('myImage has loaded');
 });
 ```
+
+
+
+#### beforeunload
+
+`beforeunload` - fires before the page and resources are unloaded.
+
+- You can use this event to show a confirmation dialog to confirm if you really want to leave/reload the page.
+- This can be used to prevent data loss (for example when filling out a form).
+- Note in the past, it was possible to customize the message in the confirmation dialog shown during the `beforeunload` event. However, due to abuse, most modern browsers have limited this functionality. Additionally, if the browser determines that the user hasn't interacted with the page significantly, it might not show the dialog at all to improve user experience.
+
+
+
+#### unload
+
+`unload` - fires when the page has completely unloaded.
+
+You can use this event to send the analytics data or to clean up resources.
+
+Typically, the `unload` event fires when you navigate from one page to another (in a traditional application, not SPA like React).
 
 
 
