@@ -148,3 +148,36 @@ You'll note that when using the `react-router-dom` `Outlet` component we always 
 
 
 
+## Tanstack react-query
+
+### useQuery
+
+1. **`isPending`**:
+   - **When It's True**: This is true when there's no cached data and no query attempt has finished yet. Essentially, it indicates that the query is in an initial pending state, waiting to start fetching.
+   - **Use Case**: Useful for showing a loading state when a query is about to begin, especially when no data from a previous fetch is available in the cache.
+2. **`isLoading`**:
+   - **When It's True**: This is true whenever the first fetch for a query is in-flight. It's a combination of `isFetching` and `isPending`, specifically for the initial loading of the query.
+   - **Use Case**: Ideal for showing a loading state when a query is initially executed and there is no existing data in the cache. This is particularly useful for the initial render of a component where you're fetching data for the first time.
+3. **`isFetching`**:
+   - **When It's True**: This is true whenever the `queryFn` is executing. It includes both the initial pending and background refetches.
+   - **Use Case**: Best used when you want to show a loading state during any data fetching activity, including the initial fetch and subsequent refetches (like after invalidation or as part of a refetch interval). This is more comprehensive than `isLoading` as it covers all instances of data fetching.
+
+### useMutation
+
+`status` property (string) -  the current state of the mutation `idle`, `pending`, `error`, or `success`
+
+
+
+1. **`isIdle`**:
+   - **True When**: The mutation is in its initial state and has not been triggered yet (`status === 'idle'`).
+   - **Use Case**: Useful for cases where you need to check if a mutation is yet to start.
+2. **`isPending`**:
+   - **True When**: The mutation is currently executing (`status === 'pending'`).
+   - **Use Case**: Ideal for showing loading indicators or disabling buttons while the mutation is in progress.
+3. **`isSuccess`**:
+   - **True When**: The mutation completed successfully (`status === 'success'`).
+   - **Use Case**: Great for triggering success messages or actions that depend on the successful completion of the mutation.
+4. **`isError`**:
+   - **True When**: The mutation encountered an error (`status === 'error'`).
+   - **Use Case**: Useful for displaying error messages or handling fallback logic when a mutation fails.
+
