@@ -20,7 +20,7 @@ In C#, things can be either: **primitive/value** type or **non-primitive/referen
 1. Primitive/Value Type:
 
    - Primitive types are basic data types built into the C# language.
-   - Primitive types include `int`, `float`, `double`, `char`, `bool`, etc
+   - Example `int`
    - When a variable is assigned a primitive/value type, it stores the actual value of the data.
    - When you assign a primitive type to another variable or pass it as a method parameter, a copy of the value is created (like in JavaScript)
    - Primitive types are allocated on the stack and directly contain their values.
@@ -28,7 +28,7 @@ In C#, things can be either: **primitive/value** type or **non-primitive/referen
 2. Non-Primitive/Reference Type:
 
    - Non-primitive types are typically defined by the developer or provided by the .NET framework.
-   - Examples of non-primitive types include `classes`, `structs`, `interfaces`, `arrays`, `strings`, `delegates`, etc
+   - Example `array`
    - When a variable is assigned a non-primitive/reference type, it stores a reference to the memory location where the data is stored.
    - When you assign a non-primitive type to another variable or pass it as a method parameter, the reference to the object is copied, not the actual object itself.
    - Non-primitive types are allocated on the heap, and variables of non-primitive types store references to their memory locations.
@@ -57,25 +57,9 @@ Console.WriteLine(array2[0]); // 88
 
 
 
-### Object Browser in VS
-
-All data types in C# correspond to .NET classes for example data type `int` corresponds to .NET class `System.Int32`
-
-This gives us access to the additional properties and methods provided by .NET for that class
-
-
-
-In visual studio we can view all associated properties and methods of a class in our solution using the **Object Browser**
-
-View > Object Browser..
-
-from here you can look up any class, like `System.String` aka `string`, to view all of its associated properties and methods!
-
-
-
 ### Primitive/value data types
 
-**C# Type** = **.NET Type**
+**C# Type** = **.NET Type** (Stuct)
 
 `byte` = `Byte`
 
@@ -95,7 +79,7 @@ from here you can look up any class, like `System.String` aka `string`, to view 
 
 `bool` = `Boolean`
 
-`struct` = `Struct`
+
 
 
 
@@ -112,21 +96,27 @@ decimal myNum = 1.2m;
 
 ### Non-primitive/reference types
 
-**C# Type** = **.NET Type**
+**C# Type** = **.NET Type** (Class)
 
 `string` = `String`
 
 `T[ ]` = `Array`
 
-`class` = `Class`
-
-`enum` = `Enum`
-
-`interface` = `Interface`
-
-`delegate` = `Delegate`
 
 
+### Object Browser in VS
+
+All types in C# correspond to a .NET struct or class, for example type `int` corresponds to .NET class `System.Int32`
+
+This gives us access to the additional properties and methods provided by .NET for that class
+
+
+
+In Visual Studio we can view all associated properties and methods of a struct/class using the **Object Browser**
+
+View > Object Browser..
+
+from here you can look up any struct/class, like `System.String` aka `string`, to view all of its associated properties and methods
 
 
 
@@ -212,11 +202,52 @@ etc
 
 
 
-## Number
 
-NUMBERS are a PRIMITAVE data type
 
-### Number Data Types
+## Class vs Struct
+
+In C# there are essestially two main types from which we make new types.. structures (structs) and classes.
+
+So all of C# types discussed above are either a Struct or a Class.
+
+In fact all or the primitive types are **structs** in .NET framework
+
+All of the reference types are **classes** in .NET framework
+
+
+
+## Struct
+
+Struct is not a data type itself but a construct that allows you to define your own data types and create objects of those types.
+
+Structs are **value types** that contain data members (fields), properties, and methods. They are typically used to represent small, lightweight objects that hold a few related values.
+
+to declare a struct..
+
+```csharp
+public struct RgbColor
+{
+    public int Red;
+    public int Green;
+    public int Blue;
+}
+```
+
+similar to classes, structs combine related properties and methods together
+
+and their differences with classes are subtle enough that you may never need them
+
+Structs become advantageous when you want to create simple, small objects like the example of RgbColor, above
+
+Since structs are more lightweight than classes, when you need maybe thousands of instances of an object, a struct may be the more appropriate way to define its properties and methods
+
+
+
+### Numbers
+
+Numbers are primative/value type in C# and each C# number data type corresponds to a .NET struct
+
+#### Number Data Types
 
 ```csharp
 int intMin = int.MinValue;
@@ -325,7 +356,7 @@ All Number Types:
 
 
 
-### Overflow
+#### Overflow
 
 in C#, if a number variable exceeds the range of it's data type..
 
@@ -350,9 +381,185 @@ or you could, you know, use a different data type like `int`
 
 
 
-## String
 
-STRINGS are actually NON-PRIMITIVE
+
+## Class
+
+Class is not a data type itself but a construct that allows you to define your own data types and create objects of those types.
+
+Classes are **reference types** that contain data members (fields), properties, and methods.
+
+
+
+### Create Class
+
+To create a class..
+
+```csharp
+         public                     class                  Person
+// (access modifier)   (class keyword)    (class name)
+```
+
+**access modifier** = who can access this class (public makes it accessable anywhere in the app)
+
+
+
+to add a property to the class..
+
+```csharp
+public class Person
+{
+    public string Name;
+}
+```
+
+
+
+to add a method to the class..
+
+```csharp
+public class Person
+{
+    public string Name;   // property
+  
+    public void SayHi()    // method
+    {
+        Console.WriteLine("Hi, my name is " + Name);
+    }
+}
+```
+
+**void** means the method does not return a value
+
+
+
+another example:
+
+```csharp
+public class Calculator
+{
+    public int Add(int a, int b)
+    {
+        return a + b;
+    }
+}
+```
+
+instead of **void**, the Add method here returns an **int**
+
+
+
+### Create Object
+
+An instance of a class is an object..
+
+let's create an object..
+
+```csharp
+Person person = new Person( );
+```
+
+this creates a new object of class Person() and assigns it to a variable of class Person called person
+
+
+
+recall how we created a new string object..
+
+```csharp
+string myString = "hi";
+```
+
+we can also create a string object using..
+
+```csharp
+string myString = new string("hi");
+```
+
+but note using the `new` keyword is not necessary when creating a string using a string literal because the language provides implicit support for creating string objects without explicitly invoking a constructor.
+
+Also note string objects are immutable in C#.
+
+An immutable object is an object whose state (the values of its properties) cannot be modified after it is created. Once an immutable object is created, its state remains fixed throughout its lifetime.
+
+Note we are not saying the myString variable is immutable (constant) but rather the string object "hi" is immutable
+
+```csharp
+string myString = "hi";
+myString = "bye";
+```
+
+in this case, the `myString` variable is updated to reference the newly created `string` object which has the value "bye"
+
+
+
+ok back to creating an object of user-defined data type (class)..
+
+```csharp
+Person person = new Person( );
+```
+
+this creates a new object of class Person() and assigns it to a variable of class Person called person
+
+
+
+we can clean this up by simply saying..
+
+```csharp
+var person = new Person( );
+```
+
+this creates a new object of class Person() called person, that C# automatically determines is of class Person
+
+```csharp
+person.Name = "Parker";
+person.SayHi(); // Hi, my name is Parker
+```
+
+
+
+### The Static Modifier
+
+note with our calculator class..
+
+```csharp
+public class Calculator
+{
+    public int Add(int a, int b)
+    {
+        return a + b;
+    }
+}
+```
+
+we would have to 'new up' a calculator object in order to use it's `Add` method
+
+
+
+instead we can add the **static modifier** to our method definition within our class..
+
+```csharp
+public class Calculator
+{
+    public static int Add(int a, int b)
+    {
+        return a + b;
+    }
+}
+```
+
+this means we can access the `Add` method directly from the class (no object needed)
+
+```csharp
+int result = Calculator.Add(1, 2);
+```
+
+
+
+
+
+### String
+
+Strings are reference-type (non-primitive)
 
 but they display many of the characteristics of primitive/value type
 
@@ -428,214 +635,15 @@ and respects line breaks
 
 
 
-## Class
 
-CLASS is NON-PRIMITIVE
 
-Classes combine and package related properties and methods together
 
-A class is not a data type itself but a construct that allows you to define your own data types and create objects of those types
 
+### Array
 
+Arrays are reference-type (non-primitive)
 
-### Create Class
-
-To create a class..
-
-```csharp
-         public                     class                  Person
-// (access modifier)   (class keyword)    (class name)
-```
-
-**access modifier** = who can access this class (public makes it accessable anywhere in the app)
-
-
-
-to add a property to the class..
-
-```csharp
-public class Person
-{
-    public string Name;
-}
-```
-
-
-
-to add a method to the class..
-
-```csharp
-public class Person
-{
-    public string Name;   // property
-  
-    public void SayHi()    // method
-    {
-        Console.WriteLine("Hi, my name is " + Name);
-    }
-}
-```
-
-**void** means the method does not return a value
-
-
-
-another example:
-
-```csharp
-public class Calculator
-{
-    public int Add(int a, int b)
-    {
-        return a + b;
-    }
-}
-```
-
-instead of **void**, the Add method here returns an **int**
-
-
-
-### Create Object
-
-An object is an instance of a class..
-
-let's create an object..
-
-```csharp
-Person person = new Person( );
-```
-
-this creates a new object of class Person() and assigns it to a variable of class Person() called person
-
-
-
-recall how we created a new string object..
-
-```csharp
-string myString = "hi";
-```
-
-we can also create a string object using..
-
-```csharp
-string myString = new string("hi");
-```
-
-but note using the `new` keyword is not necessary when creating a string using a string literal because the language provides implicit support for creating string objects without explicitly invoking a constructor.
-
-Also note string objects are immutable in C#.
-
-An immutable object is an object whose state (the values of its properties) cannot be modified after it is created. Once an immutable object is created, its state remains fixed throughout its lifetime.
-
-Note we are not saying the myString variable is immutable (constant) but rather the string object "hi" is immutable
-
-```csharp
-string myString = "hi";
-myString = "bye";
-```
-
-in this case, the `myString` variable is updated to reference the newly created `string` object which has the value "bye"
-
-
-
-ok back to creating an object of user-defined data type (class)..
-
-```csharp
-Person person = new Person( );
-```
-
-this creates a new object of class Person() and assigns it to a variable of class Person() called person
-
-
-
-we can clean this up by simply saying..
-
-```csharp
-var person = new Person( );
-```
-
-this creates a new object of class Person() called person, that C# automatically determines is of class Person()
-
-```csharp
-person.Name = "Parker";
-person.SayHi(); // Hi, my name is Parker
-```
-
-
-
-### The Static Modifier
-
-note with our calculator class..
-
-```csharp
-public class Calculator
-{
-    public int Add(int a, int b)
-    {
-        return a + b;
-    }
-}
-```
-
-we would have to 'new up' a calculator object in order to use it's `Add` method
-
-
-
-instead we can add the **static modifier** to our method definition within our class..
-
-```csharp
-public class Calculator
-{
-    public static int Add(int a, int b)
-    {
-        return a + b;
-    }
-}
-```
-
-this means we can access the `Add` method directly from the class (no object needed)
-
-```csharp
-int result = Calculator.Add(1, 2);
-```
-
-
-
-## Struct
-
-STRUCT is PRIMITIVE
-
-A struct is not considered a data type itself but rather a value type that represents a composite structure. A struct defines the structure and behavior of instances of that struct.
-
-Structs are value types that contain data members (fields) and can also include properties and methods. They are typically used to represent small, lightweight objects that are commonly used to hold a few related values.
-
-to declare a struct..
-
-```csharp
-public struct RgbColor
-{
-    public int Red;
-    public int Green;
-    public int Blue;
-}
-```
-
-similar to classes, structs combine related properties and methods together
-
-and their differences with classes are subtle enough that you may never need them
-
-Structs become advantageous when you want to create simple, small objects like the example of RgbColor, above
-
-Since structs are more lightweight than classes, when you need maybe thousands of instances of an object, a struct may be the more appropriate way to define its properties and methods
-
-
-
-## Array
-
-ARRAY is NON-PRIMITIVE
-
-An array is not considered a data type itself, but rather a data structure that can hold multiple elements *of the same type*.
+A data structure that can hold multiple elements *of the same type*.
 
 
 
@@ -679,6 +687,50 @@ is also valid, but only with C# 3.0 and later
 
 
 
+## Enum
+
+In C#, `enum` is a keyword, similar to `class` and `struct`, that is utilized to define custom value types with a set of named constants. While `enum` under the hood inherits from `System.Enum`, making it seem class-like in its inheritance chain, it exhibits behavior more akin to a struct in terms of being a value type. This means enums are allocated on the stack and passed by value, which aligns them closely with the characteristics of structs rather than reference types like classes. Enums serve to enhance code readability, maintainability, and type safety by allowing developers to work with a predefined set of named integral constants instead of loose numeric values.
+
+An enum represents a set of key/value pairs.
+
+An Enum's key/values pairs are **constants**
+
+So Enums are useful for creating a set of related named **numeric** constants
+
+```c#
+public enum FavoriteRgb
+{
+  Red = 10,
+  Green = 120,
+  Blue = 230
+}
+
+// now can use..
+
+var red = FavoriteRgb.Red;
+Console.WriteLine(red); // Red - type is FavoriteRgb
+Console.WriteLine((int)red); // 10 - after cast to int
+
+var num = 230;
+Console.WriteLine((FavoriteRgb)num); // Blue - after cast to FavoriteRgb
+```
+
+The values of the keys in an enum must be numeric and are default **int**, but other numberic types (like byte) can be specified
+
+
+
+## Delegate
+
+In C#, `delegate` is a keyword used to define types that represent references to methods with a specific signature. This capability allows methods to be passed as parameters, stored in variables, and invoked dynamically, similar to function pointers in other programming languages. However, unlike function pointers, delegates are object-oriented, type-safe, and secure. Delegates are reference types, and when you create a delegate instance, it holds a reference to a method or a chain of methods (multicast delegates) that can be invoked through the delegate.
+
+
+
+## Interface
+
+In C#, `interface` is a keyword used to define a contract or a blueprint for classes and structs. An interface specifies a set of method signatures, properties, events, and indexers without providing implementations. Implementing classes or structs must provide concrete implementations for all members defined by the interface. Interfaces are a fundamental tool for achieving abstraction and enabling polymorphism in object-oriented programming, allowing for flexible and loosely coupled designs.
+
+
+
 
 
 ## Variables
@@ -702,7 +754,7 @@ const int MyConst = 10;
 
 
 
-Variables..
+variable names..
 
 - cannot start with a number
 - cannot be a C# reserved word
@@ -929,6 +981,20 @@ Lambda expression syntax:
 Func<int, int, int> add = (a, b) => a + b;
 int result = add(3, 4);  // result = 7
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
