@@ -15,25 +15,22 @@ string firstName = "Parker";   // double "quotes" used for data type string
 
 ### Intro
 
-In C#, things can be either: **primitive/value** type or **non-primitive/reference** type
+In C#, types can be either: **primitive/value** type or **non-primitive/reference** type
 
 1. Primitive/Value Type:
 
    - Primitive types are basic data types built into the C# language.
    - Example `int`
-   - When a variable is assigned a primitive/value type, it stores the actual value of the data.
-   - When you assign a primitive type to another variable or pass it as a method parameter, a copy of the value is created (like in JavaScript)
-   - Primitive types are allocated on the stack and directly contain their values.
-
+   - When a variable is assigned a primitive/value type, such as an instance of a `struct` or an `int`, it directly stores the actual value of the data within its allocated space on the **stack**. This direct storage means that for any operation on the variable, like assigning it to another variable or passing it as a method parameter, a copy of the value is created.
+   
 2. Non-Primitive/Reference Type:
 
    - Non-primitive types are typically defined by the developer or provided by the .NET framework.
    - Example `array`
-   - When a variable is assigned a non-primitive/reference type, it stores a reference to the memory location where the data is stored.
+   - When a variable is assigned a non-primitive/reference type, such as an instance of a `class` or an `array`, this establishes a reference to the data's memory location on the **heap**. Variables of non-primitive/reference types thus don't contain the data itself but rather a pointer to the heap where the data is dynamically managed.
    - When you assign a non-primitive type to another variable or pass it as a method parameter, the reference to the object is copied, not the actual object itself.
-   - Non-primitive types are allocated on the heap, and variables of non-primitive types store references to their memory locations.
-
    
+
 
 Example:
 
@@ -206,11 +203,11 @@ etc
 
 ## Class vs Struct
 
-In C# there are essestially two main types from which we make new types.. structures (structs) and classes.
+In C# there are essestially two main constructs we can use to make new types.. structures (structs) and classes.
 
-So all of C# types discussed above are either a Struct or a Class.
+So all the C# types discussed above are either a Struct or a Class in .NET
 
-In fact all or the primitive types are **structs** in .NET framework
+In fact all of the primitive types are **structs** in .NET framework
 
 All of the reference types are **classes** in .NET framework
 
@@ -245,7 +242,7 @@ Since structs are more lightweight than classes, when you need maybe thousands o
 
 ### Numbers
 
-Numbers are primative/value type in C# and each C# number data type corresponds to a .NET struct
+Numbers are primative/value type in C# and each C# number data type corresponds to a .NET struct (viewable in VS Object Browser)
 
 #### Number Data Types
 
@@ -391,7 +388,7 @@ Classes are **reference types** that contain data members (fields), properties, 
 
 
 
-### Create Class
+### Create a Class
 
 To create a class..
 
@@ -637,8 +634,6 @@ and respects line breaks
 
 
 
-
-
 ### Array
 
 Arrays are reference-type (non-primitive)
@@ -650,12 +645,6 @@ A data structure that can hold multiple elements *of the same type*.
 to declare an array..
 
 ```csharp
-// instead of..
-int number1;
-int number2;
-int number3;
-
-// use..
 int[ ] numbers = new int[3];
 ```
 
@@ -671,7 +660,7 @@ we can simultaneously declare and define an array with..
 int[ ] numbers = new int[3] {1, 2, 3};
 ```
 
-again we can simplify this by using simply..
+again we can simplify this by using..
 
 ```csharp
 var numbers = new int[3] {1, 2, 3};
@@ -689,11 +678,11 @@ is also valid, but only with C# 3.0 and later
 
 ## Enum
 
-In C#, `enum` is a keyword, similar to `class` and `struct`, that is utilized to define custom value types with a set of named constants. While `enum` under the hood inherits from `System.Enum`, making it seem class-like in its inheritance chain, it exhibits behavior more akin to a struct in terms of being a value type. This means enums are allocated on the stack and passed by value, which aligns them closely with the characteristics of structs rather than reference types like classes. Enums serve to enhance code readability, maintainability, and type safety by allowing developers to work with a predefined set of named integral constants instead of loose numeric values.
+In C#, `enum` is a keyword, similar to `class` and `struct`, that is utilized to define custom value types with a set of named constants. While `enum` under the hood inherits from the .NET class `System.Enum`, making it seem class-like, it exhibits behavior more akin to a struct (it is value-type). This means enums are allocated on the stack and passed by value, which aligns them closely with the characteristics of structs rather than reference types like classes. Enums serve to enhance code readability, maintainability, and type safety by allowing developers to work with a predefined set of named integral constants instead of loose numeric values.
 
 An enum represents a set of key/value pairs.
 
-An Enum's key/values pairs are **constants**
+An Enum's key/values pairs are numeric **constants**
 
 So Enums are useful for creating a set of related named **numeric** constants
 
@@ -840,7 +829,7 @@ where you can essentially define custom error code for when the code in the `try
 
 
 
-##  C# Operators
+##  Operators
 
 C# operator types..
 
@@ -949,8 +938,6 @@ foreach (string fruit in fruits)
 }
 ```
 
-
-
 NESTED FOR LOOP
 
 ```csharp
@@ -962,6 +949,118 @@ for (int row = 1;  row < 11;  row++)
   }
 }
 ```
+
+BREAK and CONTINUE
+
+`Break` exits the loop
+
+`continue` jumps to the next iteration 
+
+```c#
+// break on Orange
+string[] fruits = { "Apple", "Banana", "Orange", "Mango" };
+
+foreach (string fruit in fruits)
+{
+  	if (fruit == "Orange")
+    {
+        break; // exits the loop
+    }
+    Console.WriteLine(fruit);
+}
+
+// odd numbers only
+for (int i = 0; i < 10; i++)
+{
+    if (i % 2 == 0)
+    {
+        continue; // jumps to the next iteration
+    }
+    Console.WriteLine(i); // 1 3 5 7 9
+}
+```
+
+
+
+
+
+## If Else Switch
+
+if / else
+
+```c#
+if (condition) 
+{
+  	code
+}
+else if (anotherCondition)
+{
+  	code
+}
+else
+{
+  	code
+}
+```
+
+switch
+
+```c#
+switch(role)
+{
+  case Role.Admin:
+    	...
+      break;
+  case Role.Moderator:
+    	...
+      break;
+  default:
+    	...
+      break;
+}
+```
+
+ternary conditional
+
+```c#
+float price = (isMember) ? 9.99f : 19.99f;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -981,6 +1080,10 @@ Lambda expression syntax:
 Func<int, int, int> add = (a, b) => a + b;
 int result = add(3, 4);  // result = 7
 ```
+
+
+
+
 
 
 
