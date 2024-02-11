@@ -2,8 +2,6 @@
 
 
 
-NOTE in C#..
-
 ```csharp
 char myChar = 'a';   // single 'quotes' used for data type char
 string firstName = "Parker";   // double "quotes" used for data type string
@@ -78,8 +76,6 @@ Console.WriteLine(array2[0]); // 88
 
 
 
-
-
 NOTE for the **real number** types, the default used by the C# compiler is **double**
 
 so if you wan't to declare, for example, float or decimal..
@@ -103,9 +99,9 @@ decimal myNum = 1.2m;
 
 ### Object Browser in VS
 
-All types in C# correspond to a .NET struct or class, for example type `int` corresponds to .NET class `System.Int32`
+All types in C# correspond to a .NET struct or class, for example type `int` corresponds to .NET struct `System.Int32`
 
-This gives us access to the additional properties and methods provided by .NET for that class
+This gives us access to the additional properties and methods provided by .NET for that struct/class
 
 
 
@@ -650,8 +646,6 @@ int[ ] numbers = new int[3];
 
 NOTE in C# arrays have a **fixed size** that must be specified during declaration and **cannot be changed**
 
-we always need to 'new up' array objects, unlike with primitive classes like `int`
-
 
 
 we can simultaneously declare and define an array with..
@@ -672,7 +666,7 @@ note..
 int[ ] numbers = {1, 2, 3};
 ```
 
-is also valid, but only with C# 3.0 and later
+is also valid (C# 3.0 and later)
 
 
 
@@ -1030,13 +1024,85 @@ float price = (isMember) ? 9.99f : 19.99f;
 
 
 
+## Arrays
+
+All arrays in C# map to `System.Array` class in .NET
+
+Arrays in C# can be **single dimensional** or **multi dimensional**
+
+<img src="./../objects-photos-etc/c-sharp-arrays.png" alt="Dimensional Arrays" style="zoom: 67%;" />
 
 
 
+### Single Dimension Arrays
+
+Single-dimensional arrays store items in a linear form. Each item in the array can be accessed using a single index.
+
+```c#
+var numbers = new int[3];
+var numbers = new int[3] { 1, 2, 3 };
+```
 
 
 
+### Multi Dimension Arrays
 
+Can either be **rectangular** or **jagged**
+
+<img src="./../objects-photos-etc/c-sharp-arrays-2.png" alt="Multi Dim Arrays" style="zoom: 50%;" />
+
+
+
+#### Rectangular Arrays
+
+Rectangular arrays have two or more dimensions. Each element in the array is accessed using multiple indexes.
+
+2D:
+
+```c#
+var matrix = new int[3, 5]; // 3 rows and 5 columns
+
+var matrix = new int[3, 5]
+{
+  { 1, 2, 3, 4, 5 },
+  { 6, 7, 8, 9, 10 },
+  { 11, 12, 13, 14, 15 }
+};
+
+var element = matrix[1, 1]; // 7
+```
+
+3D: These arrays are essentially a collection of 2D arrays, adding another layer of depth.
+
+```c#
+var cube = new int[3, 3, 3];
+
+// 3D arrays do not support direct initialization of values as with 1D and 2D arrays, and must be assigned values like..
+cube[0, 0, 0] = 1;
+cube[0, 0, 1] = 2;
+```
+
+
+
+#### Jagged Arrays
+
+Jagged arrays are arrays of arrays. Each "sub-array" can have a different size. You can think of a Jagged Array as simply a single-dimension array containing other single-dimension arrays.
+
+```c#
+var myArray = new int[3][]; // we use two square brackets to initialize a jagged array
+
+// now we initialize three new arrays to go inside..
+
+myArray[0] = new int[4];
+myArray[1] = new int[5];
+myArray[2] = new int[3];
+
+myArray[0][0] = 22; // again we use two square brackets to access elements, rather than [0, 0]
+```
+
+
+
+## Lists
 
 
 
