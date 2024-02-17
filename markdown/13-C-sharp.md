@@ -948,7 +948,7 @@ BREAK and CONTINUE
 
 `Break` exits the loop
 
-`continue` jumps to the next iteration 
+`continue` jumps to the next iteration
 
 ```c#
 // break on Orange
@@ -1102,7 +1102,102 @@ myArray[0][0] = 22; // again we use two square brackets to access elements, rath
 
 
 
+#### Array Methods
+
+declaration/initialization:
+
+```c#
+int[] numbers;
+numbers = new int[3];
+
+int[] numbers = new int[] { 1, 2, 3 };
+
+string[] names;
+names = new string[3];
+
+names = new string[] { "Alice", "Bob", "Charlie" };
+
+Person[] people = new Person[]
+{
+    new Person { Name = "Alice", Age = 30 },
+    new Person { Name = "Bob", Age = 25 }
+};
+```
+
+properties and methods:
+
+```c#
+Array.Sort(names); // Sorts alphabetically
+Array.Reverse(names); // Reverses the elements
+
+int index = Array.IndexOf(names, "Bob");
+
+Array.Resize(ref numbers, 5); // Resizes the array to a new length*
+numbers[4] = 4; // Sets the value of the 5th element
+
+int length = numbers.Length;
+
+int[] copyOfNumbers = new int[numbers.Length];
+Array.Copy(numbers, copyOfNumbers, numbers.Length);
+
+Array.Clear(numbers, 0, numbers.Length); // Sets all elements to their default value (0 for int)
+```
+
+*Note that resizing an array with `Array.Resize` actually creates a new array and copies elements from the old array to the new one, because arrays in C# have a fixed size once created.
+
+Unlike Lists, Arrays require using the `System.Array` class for many common operations like sorting and searching.
+
+
+
 ## Lists
+
+Recall arrays in C# have a fixed size once created, that cannot change. When you need to work with a variable number of objects, reach for a List..
+
+declaration/initialization:
+
+```c#
+var numbers = new List<int>();
+var numbers = new List<int> { 1, 2, 3 };
+
+var names = new List<string>();
+var names = new List<string> { "Alice", "Bob", "Charlie" };
+
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
+var people = new List<Person>
+{
+    new Person { Name = "Alice", Age = 30 },
+    new Person { Name = "Bob", Age = 25 }
+};
+```
+
+properties and methods:
+
+```c#
+numbers.Add(4);
+numbers.AddRange(new int[] { 5, 6, 7 });
+numbers.Remove(1);
+numbers.RemoveAt(0); // Removes the first element
+numbers.Insert(0, 1); // Inserts '1' at the beginning
+numbers.Clear(); // Removes all elements
+
+names.Contains("Alice");
+names.IndexOf("Bob");
+names.Sort();
+names.Reverse();
+
+var adults = people.FindAll(person => person.Age >= 18);
+var person = people.Find(p => p.Name == "Alice");
+people.RemoveAll(p => p.Age < 18);
+people.OrderBy(p => p.Age);
+people.OrderByDescending(p => p.Name);
+```
+
+Note that the angle brackets `List<>` signify that `List` is a generic type (defined in `System.Collections.Generic`)
 
 
 
