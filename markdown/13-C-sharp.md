@@ -78,7 +78,7 @@ Console.WriteLine(array2[0]); // 88
 
 NOTE for the **real number** types, the default used by the C# compiler is **double**
 
-so if you wan't to declare, for example, float or decimal..
+so if you want to declare, for example, float or decimal..
 
 ```csharp
 float myNum = 1.2f;
@@ -548,128 +548,6 @@ int result = Calculator.Add(1, 2);
 
 
 
-
-
-### String
-
-Strings are reference-type (non-primitive)
-
-but they display many of the characteristics of primitive/value type
-
-
-
-create a string object and assign it to a variable..
-
-```csharp
-string fristName = "Parker";
-```
-
-
-
-we can concat with `+`..
-
-```csharp
-string name = firstName + " " + lastName;
-```
-
-or use string.Format()..
-
-```csharp
-string name = string.Format("{0} {1}", firstName, lastName);
-```
-
-or create a string from an array..
-
-```csharp
-int[ ] numbers = {1, 2, 3};
-string list = string.Join(",", numbers);
-// "1,2,3"
-```
-
-string characters can be accessed by index..
-
-```csharp
-string name = "Parker";
-char firstChar = name[0]; // "P"
-```
-
-and because strings are immutable we cannot change individual characters of a string object..
-
-```csharp
-name[0] = 'D'; // will not run
-name = "Darker"; // is ok
-```
-
-
-
-Special Characters:
-
-`\n` = new line
-
-`\t` = tab
-
-`\\` = backslash
-
-`\'` = escape single quote
-
-`\"` = escape double quote
-
-
-
-note if you have many special characters in a string, you can just use a **verbatim string**..
-
-```csharp
-string path = @"c:\projects\project1\folder1";
-```
-
-which is prefixed with an `@` symbol
-
-and respects line breaks
-
-
-
-
-
-### Array
-
-Arrays are reference-type (non-primitive)
-
-A data structure that can hold multiple elements *of the same type*.
-
-
-
-to declare an array..
-
-```csharp
-int[ ] numbers = new int[3];
-```
-
-NOTE in C# arrays have a **fixed size** that must be specified during declaration and **cannot be changed**
-
-
-
-we can simultaneously declare and define an array with..
-
-```csharp
-int[ ] numbers = new int[3] {1, 2, 3};
-```
-
-again we can simplify this by using..
-
-```csharp
-var numbers = new int[3] {1, 2, 3};
-```
-
-note..
-
-```csharp
-int[ ] numbers = {1, 2, 3};
-```
-
-is also valid (C# 3.0 and later)
-
-
-
 ## Enum
 
 In C#, `enum` is a keyword, similar to `class` and `struct`, that is utilized to define custom value types with a set of named constants. While `enum` under the hood inherits from the .NET class `System.Enum`, making it seem class-like, it exhibits behavior more akin to a struct (it is value-type). This means enums are allocated on the stack and passed by value, which aligns them closely with the characteristics of structs rather than reference types like classes. Enums serve to enhance code readability, maintainability, and type safety by allowing developers to work with a predefined set of named integral constants instead of loose numeric values.
@@ -714,8 +592,6 @@ In C#, `interface` is a keyword used to define a contract or a blueprint for cla
 
 
 
-
-
 ## Variables
 
 ### Intro
@@ -757,8 +633,6 @@ you can hover over the variable in VS to see which data type will be assigned
 
 
 
-
-
 ### Variable Scope
 
 variables are block scope..
@@ -774,8 +648,6 @@ variables are block scope..
   }
 }
 ```
-
-
 
 
 
@@ -884,8 +756,6 @@ C# operator types..
 
 
 
-
-
 ## Loops
 
 WHILE
@@ -976,8 +846,6 @@ for (int i = 0; i < 10; i++)
 
 
 
-
-
 ## If Else Switch
 
 if / else
@@ -1022,9 +890,180 @@ float price = (isMember) ? 9.99f : 19.99f;
 
 
 
+## Strings
+
+Strings are reference-type (non-primitive)
+
+but they display many of the characteristics of primitive/value type
+
+
+
+create a string object and assign it to a variable..
+
+```csharp
+string firstName = "Parker";
+```
+
+
+
+we can concat with `+`..
+
+```csharp
+string name = firstName + " " + lastName;
+```
+
+or use string.Format()..
+
+```csharp
+string name = string.Format("{0} {1}", firstName, lastName);
+```
+
+or create a string from an array..
+
+```csharp
+int[ ] numbers = {1, 2, 3};
+string list = string.Join(", ", numbers);
+// "1, 2, 3"
+```
+
+string characters can be accessed by index..
+
+```csharp
+string name = "Parker";
+char firstChar = name[0]; // "P"
+```
+
+and because strings are immutable we cannot change individual characters of a string object..
+
+```csharp
+name[0] = 'D'; // will not run
+name = "Darker"; // is ok
+```
+
+
+
+#### Special Characters
+
+`\n` = new line
+
+`\t` = tab
+
+`\\` = backslash
+
+`\'` = escape single quote
+
+`\"` = escape double quote
+
+
+
+note if you have many special characters in a string, you can just use a **verbatim string**..
+
+```csharp
+string path = @"c:\projects\project1\folder1";
+```
+
+which is prefixed with an `@` symbol
+
+and respects line breaks
+
+
+
+#### Useful Methods
+
+```c#
+var myString = "Hello ";
+myString.ToLower();
+myString.ToUpper();
+myString.Trim();
+myString.IndexOf('e');
+myString.Substring(startIndex, length);
+myString.Replace('H', 'Y');
+String.IsNullOrEmpty(myString);
+String.IsNullOrWhiteSpace(myString);
+myString.Split(' '); // returns an array of strings
+```
+
+
+
+#### Conversion
+
+```c#
+var myString = "1234";
+int myInt = int.Parse(myString);
+int myInt = Convert.ToInt32(myString); // generally easier to work with
+
+var myInt = 1234;
+var myString = myInt.ToString(); // "1234"
+var myString = myInt.ToString("C"); // "$1,234.00"
+var myString = myInt.ToString("C0"); // "$1,234"
+// ToString on an Int can take a 'format specifier' with lots of options on how to format the Int as a Sting
+```
+
+
+
+#### StringBuilder
+
+`StringBuilder` is a class provided by .NET in the `System.Text` namespace. An instance of the `StringBuilder` class is a mutable sequence of characters, designed to provide a more efficient way to concatenate strings compared to using immutable `String` objects. It allows for dynamic string creation and modification without creating multiple string instances, thereby improving performance for scenarios involving frequent string operations.
+
+However it isn't optimized for searching so it doesn't have methods like `IndexOf()` `Contains()` `StartsWith()` etc
+
+Useful methods:
+
+```c#
+var myString = new StringBuilder("Hello");
+myString.Append('!');
+myString.Insert(5, " World");
+myString.Remove(5, 6); // starting from index 5, remove 6 characters
+myString.Replace('!', '?');
+Console.WriteLine(myString.ToString()); // "Hello?"
+myString.Clear();
+```
+
+
+
+
+
 
 
 ## Arrays
+
+Arrays are reference-type (non-primitive)
+
+A data structure that can hold multiple elements *of the same type*.
+
+
+
+to declare an array..
+
+```csharp
+int[ ] numbers = new int[3];
+```
+
+NOTE in C# arrays have a **fixed size** that must be specified during declaration and **cannot be changed**
+
+
+
+we can simultaneously declare and define an array with..
+
+```csharp
+int[ ] numbers = new int[3] {1, 2, 3};
+```
+
+again we can simplify this by using..
+
+```csharp
+var numbers = new int[3] {1, 2, 3};
+```
+
+note..
+
+```csharp
+int[ ] numbers = {1, 2, 3};
+```
+
+is also valid (C# 3.0 and later)
+
+
 
 All arrays in C# map to `System.Array` class in .NET
 
@@ -1041,6 +1080,7 @@ Single-dimensional arrays store items in a linear form. Each item in the array c
 ```c#
 var numbers = new int[3];
 var numbers = new int[3] { 1, 2, 3 };
+int[] numbers = { 1, 2, 3 };
 ```
 
 
@@ -1151,12 +1191,16 @@ Unlike Lists, Arrays require using the `System.Array` class for many common oper
 
 ## Lists
 
-Recall arrays in C# have a fixed size once created, that cannot change. When you need to work with a variable number of objects, reach for a List..
+Recall arrays in C# have a fixed size once created that cannot change. When you need to work with a variable number of objects, reach for a List..
 
 declaration/initialization:
 
 ```c#
 var numbers = new List<int>();
+numbers.Add(1);
+numbers.Add(2);
+numbers.Add(3);
+
 var numbers = new List<int> { 1, 2, 3 };
 
 var names = new List<string>();
@@ -1201,17 +1245,96 @@ Note that the angle brackets `List<>` signify that `List` is a generic type (def
 
 
 
+## Dates and Times
+
+### DateTime
+
+`DateTime` is a struct provided by .NET Framework as part of the `System` namespace. It provides extensive functionality for dealing with dates and times, including the ability to create, manipulate, compare, and format dates and times.
+
+```c#
+var dateTime = new DateTime(); // 1/1/0001 12:00:00 AM
+var dateTime = new DateTime(1996, 4, 25); // year, month, day
+var dateTime = new DateTime(1996, 4, 25, 16, 30, 12); // year, month, day, hour, minute, second
+var dateTime = DateTime.Today; // 3/9/2024 12:00:00 AM
+var dateTime = DateTime.Now;   // 3/9/2024 2:26:21 PM
+
+var dateTime = new DateTime(1996, 4, 25, 16, 30, 12); // year, month, day, hour, minute, second
+Console.WriteLine(dateTime.Day); // 25
+Console.WriteLine(dateTime.Hour); // 16
+etc
+```
 
 
 
+Instances of `DateTime` are immutable. However we can still manipulate them using many methods, most of which start with `Add`..
+
+```c#
+var tomorrow = (DateTime.Today).AddDays(1);
+var yesterday = (DateTime.Today).AddDays(-1);
+```
 
 
 
+There are also plenty of methods to convert a `DateTime` object to a string..
+
+```c#
+var dateString = (new DateTime(1996, 4, 25)).ToLongDateString(); // Thursday, April 25, 1996
+var dateString = (new DateTime(1996, 4, 25)).ToShortDateString(); // 4/25/1996
+
+var dateString = (new DateTime(1996, 4, 25, 16, 30, 12)).ToLongTimeString(); // 4:30:12 PM
+var dateString = (new DateTime(1996, 4, 25, 16, 30, 12)).ToShortTimeString(); // 4:30 PM
+
+var dateString = (new DateTime(1996, 4, 25, 16, 30, 12)).ToString(); // 4/25/1996 4:30:12 PM
+
+var dateString = (new DateTime(1996, 4, 25)).ToString("Y"); // April 1996
+// ToString on a DateTime can take a 'format specifier' with lots of options on how to format the DateTime
+```
 
 
 
+### TimeSpan
+
+`TimeSpan` is a struct provided by .NET Framework as part of the `System` namespace used to represent a time interval. It offers a wide range of functionality for measuring and manipulating time spans, including the ability to add or subtract time intervals, compare durations, and convert between different time units (seconds, minutes, hours, etc.).
+
+```c#
+var timeSpan = new TimeSpan(); // 00:00:00
+var timeSpan = new TimeSpan(1, 0, 0); // hours, minutes, seconds -> 01:00:00
+
+var timeSpan = TimeSpan.FromHours(1); // 01:00:00 (more readable)
+
+// you can create a TimeSpan by subtracting DateTimes
+var today = DateTime.Now;
+var yesterday = DateTime.Now.AddDays(-1);
+var timeSpan = today - yesterday; // 23:59:59.9860037
+
+var timeSpan = new TimeSpan(1, 30, 12);
+timeSpan.Minutes // 30
+timeSpan.TotalMinutes // 90.2
+```
 
 
+
+Instances of `TimeSpan` are immutable. However we can still manipulate them using methods like `Add` or `Subtract`
+
+These methods take a TimeSpan as an argument
+
+```c#
+var timeSpan = new TimeSpan(1, 30, 12);
+timeSpan.Add(TimeSpan.FromMinutes(8)); // 01:38:12
+timeSpan.Subtract(TimeSpan.FromMinutes(8)); // 01:22:12
+```
+
+
+
+There are also plenty of methods to convert a `TimeSpan` object to a string..
+
+```c#
+var timeSpan = new TimeSpan(1, 30, 12);
+timeSpan.ToString(); // 01:30:12
+
+timeSpan.ToString(@"dd\.hh\:mm\:ss"); // 00.01:30:12
+// ToString on a TimeSpan can take a 'format specifier' with lots of options on how to format the TimeSpan
+```
 
 
 
