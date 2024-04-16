@@ -433,7 +433,7 @@ there are so many characters out there - from other languages to entire alphabet
 ~ Lowercase Latin letters
 ~ Uppercase Latin letters
 ~ Punctuation symbols
-~ Numbers from 0 to 9
+~ Digits 0 through 9
 
 note **Unicode** is now the industry standard for character encoding - published in the 1990s - there are a few charsets which classify as Unicode such as `UTF-8   UTF-16   UTF-32`
 
@@ -449,7 +449,7 @@ note: not all fonts have a full library of special characters - if your chosen f
 
 ### Basic Fonts
 
-`font-family` defines what font an element uses
+CSS property `font-family` defines what font an element uses
 
 `sans-serif` is a *generic font family*
 
@@ -479,7 +479,7 @@ Each *font family name* belongs to one of the *generic font families*
 
 Best **Font Family Names** for each generic font family..
 
-![font-fam-names](/home/parker/Dropbox/objects-photos-etc/font-family-names.png)
+![font-fam-names](../objects-photos-etc/font-family-names.png)
 
 
 
@@ -561,8 +561,6 @@ luckily CSS also has **relative length units** - like `%, em,` and `rem` - which
 note percentages `%` actually behave the same as `em` with respect to font sizing
 
 so let's compare just `em` vs `rem`
-
-
 
 ### em
 

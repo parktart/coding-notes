@@ -1,6 +1,6 @@
 # Shortcuts
 
-VSCode extensions: Prettier - Auto Rename Tag - x
+VSCode extensions: Live Server - Prettier - ESLint - GitLens - Auto Rename Tag - x
 
 ## VSCode
 
@@ -44,7 +44,9 @@ VSCode extensions: Prettier - Auto Rename Tag - x
 
 `Shift F12` peek references
 
-`F2` rename
+`F2` rename (in current file)
+
+`Ctrl F2` rename all occurances (in current file - including comments)
 
 
 
@@ -58,7 +60,7 @@ VSCode extensions: Prettier - Auto Rename Tag - x
 
 `Ctrl Shift Enter` insert line above
 
-`Ctrl Shift up/down` add curser above/below
+`Ctrl Alt up/down` add curser above/below
 
 
 
