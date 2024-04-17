@@ -1,5 +1,68 @@
 # Technologies
 
+## Full Stack plan
+
+### Backend/API
+
+- **Language and Framework:** Continue using **C# with .NET**. The .NET platform is versatile and fully capable of working with PostgreSQL, offering libraries and tools for seamless integration.
+- **ORM:** Instead of Insight.Database, consider using **Npgsql** with **Dapper** or **Entity Framework Core**. Npgsql is the .NET data provider for PostgreSQL, offering a high-performance, easy-to-use driver for connecting your .NET applications to PostgreSQL. Dapper is a simple object mapper for .NET that is very lightweight and fast, similar in philosophy to Insight.Database. Entity Framework Core can also be used with PostgreSQL through the Npgsql Entity Framework Core provider, offering a more feature-rich ORM experience if needed.
+
+### Frontend
+
+- **Framework:** Stick with **React** using **Vite** for the frontend. This part of your stack doesn't need to change, as it's independent of the backend database choice.
+
+### Database
+
+- **Database System:** **PostgreSQL**. It's a powerful, open-source object-relational database system that has strong support for advanced data types and performance optimization features.
+
+### IDE/Development Environment
+
+- **IDE:** Continue using **Visual Studio IDE** for C# and .NET development. Visual Studio offers extensive support for .NET development and can be used effectively for both backend and frontend development, especially with extensions that enhance its functionality.
+- **Additional Tools:** For PostgreSQL-specific tasks such as database design, management, and query optimization, you might use **pgAdmin** or **DBeaver**. These tools are not integrated into Visual Studio but are essential for managing PostgreSQL databases effectively.
+- **Extensions and Tools for PostgreSQL in Visual Studio:** While Visual Studio might not have built-in support for PostgreSQL to the extent it does for SQL Server, extensions like **Npgsql for Visual Studio** (if available) can help bridge that gap, offering enhanced PostgreSQL support within the IDE.
+
+### Version Control and Project Management
+
+- **Version Control:** Continue using your existing version control system (e.g., Git) for managing your source code, including PostgreSQL database scripts and migrations, if you decide to manage these within the same repository as your application code.
+
+### Summary
+
+This recommended stack allows you to leverage your existing knowledge and experience with .NET, C#, React, and Visual Studio, while incorporating PostgreSQL as your database system. By adopting Npgsql and potentially Dapper or Entity Framework Core for data access, you can create a powerful and efficient full-stack application with PostgreSQL at its core. This approach offers a smooth transition with minimal disruption to your existing development practices.
+
+
+
+Why use Insight.Database over Dapper?
+
+Choosing between Dapper and Insight.Database for data access in a .NET application involves considering several factors such as performance, ease of use, community support, and feature set. Both are micro-ORMs (Object-Relational Mappers) designed to simplify data access while providing better performance than more heavyweight ORMs like Entity Framework. Here's a comparison to help understand why one might choose Dapper over Insight.Database:
+
+### Performance
+
+- **Dapper**: Known for its high performance, Dapper is very efficient in executing database queries and mapping the results to .NET objects. It adds minimal overhead to your database calls, making it one of the fastest data access libraries available for .NET.
+- **Insight.Database**: Also designed for high performance, Insight.Database automatically maps query results to objects and is optimized for speed. While it is fast, benchmarks typically show Dapper having a slight edge in raw performance, especially in scenarios involving complex mappings and large datasets.
+
+### Ease of Use
+
+- **Dapper**: Dapper's API is straightforward and easy to understand, requiring explicit mapping between database queries and objects. This explicitness ensures clarity in how data mappings are handled but can lead to more boilerplate code compared to Insight.Database.
+- **Insight.Database**: One of Insight.Database's main selling points is its "automagic" mapping capabilities, where it can automatically map query results to objects without requiring explicit mappings. This can significantly reduce boilerplate code and make it easier to write data access code quickly.
+
+### Community Support and Ecosystem
+
+- **Dapper**: As one of the most popular micro-ORMs in the .NET ecosystem, Dapper enjoys extensive community support. There are numerous resources available online, including tutorials, documentation, and forums. This popularity also means it's easier to find solutions to common problems and to recruit developers familiar with Dapper.
+- **Insight.Database**: While Insight.Database has a dedicated user base and is well-regarded by those who use it, its community is smaller than Dapper's. This smaller community can mean fewer resources and less third-party support for integrating with other tools or libraries.
+
+### Feature Set
+
+- **Dapper**: Primarily focused on query execution and result mapping, Dapper keeps its feature set tight and focused. It does not try to abstract away SQL; instead, it embraces it, giving developers full control over their SQL queries.
+- **Insight.Database**: Offers a wider range of features out of the box, including automatic interface implementation, advanced mapping capabilities, and more. These features can accelerate development speed for certain projects but may introduce additional complexity when debugging or customizing behavior.
+
+### Conclusion
+
+The choice between Dapper and Insight.Database often comes down to personal preference, project requirements, and the specific needs of your development team. Dapper might be preferred for its raw performance, widespread community support, and simplicity, making it a safe and reliable choice for many projects. On the other hand, Insight.Database's automatic mapping and rich feature set can significantly speed up development for projects where these features align well with project requirements.
+
+Ultimately, both libraries offer significant advantages over traditional ORMs in terms of performance and direct control over SQL execution, and the choice between them should be informed by the specific needs and priorities of your project and team.
+
+
+
 ## Most Popular Languages
 
 **Front End**: HTML, CSS, JavaScript, and their relevant frameworks (Angular, **React**, Vue, etc)
