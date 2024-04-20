@@ -721,19 +721,19 @@ img {
 
 There are many image formats floating around the internet - lets focus on the main ones..
 
-transparancy = alpha = 
+transparency = alpha = 
 
 0-1 (semi)
 
 0 or 1 (binary)
 
-**JPG** - for **photos** \- bc photos generally contain lots of data - JPGs store that data efficiently without a ridiculous file size - **don't allow transparent pixels** (cover their background)
+**JPG** - for **photos** \- because photos generally contain lots of data - JPGs store that data efficiently without a ridiculous file size - **don't allow transparent pixels** (cover their background)
 
 **PNG** - for anything not a photo or animation - a PNG file for a photo would likely be bigger than the quality-equivalent JPG file - have a wide color palette and are great for **icons**, **diagrams**, and **logos** - **allow semi transparent pixels**
 
 **SVG** (vector-based rather than pixel-based) meaning they scale up/down without loss of quality - use for images containing simple geometric shapes, just like PNGs.. **icons**, **diagrams**, and **logos** \- use whenever possible - don't use SVGs for images containing lots of text - **allow semi transparent pixels**
 
-**WebP** - newer - provides superior **lossless** and **lossy** **compression** for images on the web - meaning smaller file sizes for similar quality - use to replace any PNG or JPG scenerio - **allow semi transparent pixels**
+**WebP** - newer - provides superior **lossless** and **lossy** **compression** for images on the web - meaning smaller file sizes for similar quality - use to replace any PNG or JPG scenario - **allow semi transparent pixels**
 
 **GIF**s - for simple **animations** \- have a limited color palette - **allow only binary transparent pixels**
 
@@ -1285,7 +1285,7 @@ the **universal selector** = `*` will target all elements
 a **type selector** (or element selector) is used to define which type of element you want to target - its syntax is simply the same as the element you want to target - for example to target all `<div>` elements..
 
 ```css
-/* styles.css */
+/* style.css */
 
 div {
   color: white;
@@ -1305,7 +1305,7 @@ a **class selector** is used to define which class you want to target - you can 
 ```
 
 ```css
-/* styles.css */
+/* style.css */
 
 .alert-text {
   color: red;
@@ -1325,7 +1325,7 @@ an **id selector** is used to select elements with a given ID - it is similar to
 ```
 
 ```css
-/* styles.css */
+/* style.css */
 
 #title {
   background-color: red;
@@ -1341,7 +1341,7 @@ note: it is best practice to use **class** instead of the **id selector** when p
 **Grouping**: you can style multiple classes in the same block of code - seperate the classes with a comma - for example..
 
 ```css
-/* styles.css */
+/* style.css */
 
 .read,
 .unread {
@@ -1364,7 +1364,7 @@ note: it is best practice to use **class** instead of the **id selector** when p
 ```
 
 ```css
-/* styles.css */
+/* style.css */
 
 .subsection.header {
   color: red;
@@ -1399,7 +1399,7 @@ the **descendant combinator** is represented by **a single space** between selec
 ```
 
 ```css
-/* styles.css */
+/* style.css */
 
 .ancestor .contents {
   /* some declarations */
@@ -1430,7 +1430,7 @@ ahh the cascade
 
 ### 1. Specificity
 
-a CSS declaration that is more specific will take precedence over less specific ones - for example..
+a CSS selector that is more specific will take precedence over less specific ones - for example..
 
 **Inline Styles** have a higher specificity than **Selectors** - and so take precedence
 
@@ -1454,27 +1454,27 @@ a larger amount of a single selector will beat a smaller amount of the same sele
 
 ```css
 /* rule 1 */
-.subsection {
-  color: blue;
-}
-
-/* rule 2 */
 .main .list {
   color: red;
 }
+
+/* rule 2 */
+.subsection {
+  color: blue;
+}
 ```
 
-red wins here - more examples of [specificity](https://www.theodinproject.com/lessons/foundations-css-foundations) (control f)
+red wins here
 
 
 
 ### 2. Inheritance
 
-Inheritance refers to certain CSS properties that, when applied to an element, are inherited by that element’s descendants
+Inheritance refers to certain CSS properties that, when applied to an element, are inherited by that element's descendants.
 
-Typography based properties (`color`, `font-size`, `font-family`, etc.) are usually inherited, while most other properties aren’t
+Typography based properties (`color`, `font-size`, `font-family`, etc.) are usually inherited, while most other properties aren't.
 
-The exception to this is when directly targeting an element, as this always beats inheritance
+The exception to this is when directly targeting an element, as this always beats inheritance.
 
 
 
@@ -1547,7 +1547,7 @@ to the top of your CSS file
 
 
 
-you can use Layers to import specific styles from another css file: see [organizing imports](https://developer.chrome.com/blog/cascade-layers/#organizing-imports)
+you can use Layers to import specific styles from another CSS file: see [organizing imports](https://developer.chrome.com/blog/cascade-layers/#organizing-imports)
 
 
 
@@ -1563,12 +1563,12 @@ there are three different methods to add CSS to HTML
 <!-- index.html -->
 
 <head>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 ```
 
 ```css
-/* styles.css */
+/* style.css */
 
 div {
   color: white;
@@ -1594,7 +1594,7 @@ This method..
 
 **Internal CSS** - or embedded CSS - you add the CSS within the HTML file - you place all of the rules inside a `<style>` element - which is inside the `<head>` element
 
-the CSS syntax works the same as if it were in a seperate css file
+the CSS syntax works the same as if it were in a separate CSS file
 
 ```html
 <head>
@@ -1644,7 +1644,7 @@ this minimal formatting is defined in the **User Agent Stylesheet** which is a k
 
 each User Agent (UA aka web browser) will have a default style sheet that presents documents in a reasonable, but arguably mundane, manner
 
-there are few instances where one should completely reset this default stylesheet - but usually we overwrite specific parts of it indivually, for example..
+there are few instances where one should completely reset this default stylesheet - but usually we overwrite specific parts of it individually, for example..
 
 ```css
 * {
@@ -1658,11 +1658,9 @@ there are few instances where one should completely reset this default styleshee
 
 ## CSS best practices
 
-how i will style Odin Projects..
-
 ### Use the External Method
 
-use the **external method** to add CSS to all Odin projects
+use the **external method** to add CSS
 
 store your `style.css` file(s) in a folder called `css`
 
@@ -1831,15 +1829,15 @@ you can get a rough idea of this by applying a border to every item on your page
 }
 ```
 
-note any cirlces you see as a result of this also behave just like rectangles (well, squares) when side by side
+note any circles you see as a result of this also behave just like rectangles (well, squares) when side by side
 
 laying out a webpage and positioning all its elements = deciding how you are going to nest and stack these boxes
 
 to manipulate the size of boxes, and the space between them, we use `width`, `height`, `margin`, `border`, and `padding`
 
-![margin-border-padding](/home/parker/Dropbox/objects-photos-etc/margin-border-padding.png)
+![margin-border-padding](../objects-photos-etc/margin-border-padding.png)
 
-![margin-border-padding-2](/home/parker/Dropbox/objects-photos-etc/margin-border-padding-2.png)
+![margin-border-padding-2](../objects-photos-etc/margin-border-padding-2.png)
 
 `width` is the width of the 'content box' (unless `border-box` is specified)
 
