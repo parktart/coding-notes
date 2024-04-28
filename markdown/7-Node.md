@@ -113,7 +113,7 @@ node  # opens the Node terminal console
 
 
 
-Node is so useful because you can utilize all of these modules (also called packages) in building your project
+Node is useful because you can utilize all of these modules (also called packages) in building your project
 
 There are three basic types of modules..
 
@@ -177,14 +177,6 @@ Runtime `Node`
 Build Command `npm install`
 
 Start Command `node index.js`
-
-
-
-ELSE try..
-
-and if you need a database: Railway, Planetscale, CockroachDB
-
-AWS/GCP is the hard mode option for everything
 
 
 
@@ -349,6 +341,96 @@ console.log(myURL.searchParams.get('id')); // 100
 
 
 
+## CommonJS vs. ES Modules
+
+Node.js supports two different types of module syntax: **CommonJS** and **ES Modules**.
+
+#### CommonJS
+
+This is the original module syntax that has been traditionally used in Node.js. It uses `require` for importing modules and `module.exports` for exporting modules. Here's an example of a CommonJS script:
+
+```javascript
+// utils.cjs
+const path = require('path');
+
+const makeDirectory = (dirPath, callback) => {
+  const fs = require('fs');
+  fs.mkdir(path.join(__dirname, dirPath), {}, callback);
+};
+
+module.exports = makeDirectory;
+```
+
+#### ES Modules
+
+Introduced with ECMAScript 2015 (ES6), ES Modules bring a more modern syntax with `import` and `export` statements. Node.js started supporting ES Modules natively with version 12.x. Here's how you can use ES Modules in a Node.js script:
+
+```javascript
+// utils.mjs
+import { mkdir } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export const makeDirectory = (dirPath, callback) => {
+  mkdir(join(__dirname, dirPath), {}, callback);
+};
+```
+
+#### Importing
+
+```javascript
+// index.cjs
+const makeDirectory = require('./utils.cjs'); // if makeDirectory is the named export
+const utils = require('./utils.cjs'); // if you want to import everything
+```
+
+```javascript
+// index.mjs
+import { makeDirectory } from './utils.mjs'; // if makeDirectory is a named export
+import makeDirectory from './utils.mjs'; // if makeDirectory is the default export
+import * as utils from './utils.mjs'; // if you want to import everything
+```
+
+#### Configuring Node.js for ES Modules
+
+To run ES Modules, you must ensure:
+
+1. **Node.js Compatibility**: Your version of Node.js must be v12.x or later.
+2. **Project Configuration**: Include `"type": "module"` in your project's `package.json`. This configures Node.js to treat `.js` files as ES Modules by default.
+
+```json
+{
+  "name": "project-name",
+  "version": "1.0.0",
+  "type": "module"
+}
+```
+
+#### Running CommonJS and ES Modules Together
+
+If your project contains both CommonJS and ES Module files, you can:
+
+- Use the `.cjs` extension for CommonJS scripts.
+- Use the `.mjs` extension for ES Modules, or keep `.js` if `"type": "module"` is set in `package.json`.
+
+#### Adapting CJS to ESM
+
+In ES Modules, global variables like `__dirname` and `__filename` from CommonJS are not available. You must use `import.meta.url` and the `url` module to achieve similar functionality:
+
+```javascript
+// index.mjs
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+```
+
+Watch out for differences like this when transitioning a CommonJS file to ES Module syntax.
+
+
+
 ## Events
 
 **events** is maybe the most important "core" module of Node
@@ -364,10 +446,10 @@ When the `EventEmitter` object emits an event, all of the functions attached to 
 The following example shows a simple `EventEmitter` instance with a single listener. The `.on()` method is used to register listeners, while the `.emit()` method is used to trigger the event.
 
 ```javascript
-const EventEmitter = require('events'); // here we import the EventEmitter class
+const EventEmitter = require('events'); // import the EventEmitter class
 
 // Init object
-const myEmitter = new EventEmitter(); // myEmitter is an object of the EventEmitter class
+const myEmitter = new EventEmitter(); // myEmitter is an object of type EventEmitter
 
 // Event listener
 myEmitter.on('event', () => console.log('event fired!'));
@@ -387,7 +469,7 @@ custom methods and properties to the class before using it to make their emitter
 class MyEmitter extends EventEmitter { }; // and then customize this MyEmitter class as desired
 
 // Init object
-const myEmitter = new MyEmitter(); // myEmitter is an object of class MyEmitter
+const myEmitter = new MyEmitter(); // myEmitter is an object of type MyEmitter
 ```
 
 when an object is created from the `MyEmitter` class, it will have access to all of the properties and methods defined in the `MyEmitter` class, as well as any properties and methods inherited from the `EventEmitter` class
@@ -400,13 +482,7 @@ when an object is created from the `MyEmitter` class, it will have access to all
 
 
 
-
-
 ## Cloning a Node Project
-
-
-
-
 
 #### package-lock.json
 
@@ -428,3 +504,8 @@ If the `package-lock.json` file is included in a repo's source control, running 
 When you clone a repo that contains a `package-lock.json` file, you can simply run `npm ci` instead of `npm install`. The `npm ci` (or `npm clean-install`) command installs the dependencies based on the locked versions specified in `package-lock.json`. This command skips the dependency resolution process and installs the exact versions specified in the lock file, providing consistent results across different environments.
 
 Using `npm ci` is generally preferred over `npm install` in scenarios where the `package-lock.json` file is present because it ensures a reproducible and deterministic installation process, respecting the locked versions. This is particularly important in production or CI/CD environments where consistency and reliability are crucial.
+
+
+
+## Traversy NodeJS
+
