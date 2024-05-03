@@ -99,9 +99,9 @@ body {
   color: white;
   background-color: black;
   background-image: linear-gradient(black, rgb(42, 43, 42));
-  flex: 1; /* body fills the viewport */
   display: flex;
   flex-direction: column;
+  flex: 1; /* body fills the viewport */
 }
 
 .container {
@@ -171,10 +171,6 @@ button:hover {
 
 button:active {
   opacity: 0.5;
-}
-
-a#reset {
-  /* margin-top: auto; */
 }
 
 footer {
@@ -1944,7 +1940,7 @@ or to group elements and position them on a page
 
 ### Normal Flow
 
-the way browsers layout elements if you haven't changed their layout yourself is called **normal flow**
+the way browsers lay out elements if you haven't changed their layout yourself is called **normal flow**
 
 starting with a solid well-structured document that's readable in normal flow is the best way to begin any webpage
 
@@ -2058,6 +2054,8 @@ for collapsing (vertical) margins for **block boxes**..
 - if two negative margins meet - the smallest (furthest from zero) will be used - negative margins can cause boxes to overlap
 - if one positive and one negative meet - they will be added (the margin is shrunk by the negative)
 
+NOTE margins between flex/grid items **do not collapse**.
+
 #### Borders
 
 there are four borders, it's a rectangle after all, and each border has a width, style, and color
@@ -2124,17 +2122,17 @@ a **flex container** is any element that has `display: flex`
 
 a **flex item** is any element that lives directly inside of a flex container
 
-![flexbox](/home/parker/Dropbox/objects-photos-etc/flexbox.png)
+![flexbox](./../objects-photos-etc/flexbox.png)
 
-Note you can also apply `display: flex` to a **flex item** and use flexbox to arrange *its* childred - meaning an element can be both a **flex item** and **flex container**
+Note you can also apply `display: flex` to a **flex item** and use flexbox to arrange *its* children - meaning an element can be both a **flex item** and **flex container**
 
-![flexbox2](/home/parker/Dropbox/objects-photos-etc/flexbox2.png)
+![flexbox2](./../objects-photos-etc/flexbox2.png)
 
 Creating and nesting multiple flex containers and items will enable us to create complex layouts. 
 
 The following image was achieved using *only* flexbox to arrange, size, and place the various elements.
 
-![flexbox3](/home/parker/Dropbox/objects-photos-etc/flexbox3.png)
+![flexbox3](./../objects-photos-etc/flexbox3.png)
 
 remember that these flexbox properties are just a language that lets you tell browsers how to arrange a bunch of HTML elements - the hard part isn’t actually writing the HTML and CSS, but figuring out conceptually (on a piece of paper), the behavior of all the necessary boxes to create a given layout
 
@@ -2142,7 +2140,7 @@ remember that these flexbox properties are just a language that lets you tell br
 
 ## Flexbox Summary
 
-note **flex items** can be manipulated individually - but for the most part it's up to the container to determine their layout
+note **flex items** can be manipulated individually - but for the most part it's their container that determines their layout
 
 flex containers only know how to position elements that are one level deep (their direct children)
 
@@ -2152,22 +2150,19 @@ for most purposes, authors should use `flex:` `auto`, `initial`, `none`, or `1, 
 
 ```css
 .flex-container {
-  color: white;
-  background-color: blue;
+  display: flex; /* Establishes a flex container; use 'inline-flex' for inline level flex container */
+  flex-direction: row; /* Default direction; could also be 'column', 'row-reverse', or 'column-reverse' */
+  flex-wrap: nowrap; /* Default no wrapping; use 'wrap' to allow wrapping */
+  flex-flow: row-reverse wrap; /* a shorthand which combines flex-direction and flex-wrap */ 
+  justify-content: flex-start; /* Default horizontal alignment; options: 'center', 'flex-end', 'space-between', 'space-around', 'space-evenly' */
+  align-items: stretch; /* Default vertical alignment; options: 'flex-start', 'center', 'flex-end', 'baseline' */
+  align-content: flex-start; /* Default wrapped item alignment - similar to align-items but used to space out rows/columns of wrapped content - "center" "flex-end" "space-between-around-evenly" "stretch" */
+  gap: 8px; /* Sets gap all around the items */
+  row-gap: 8px; /* gap between rows */
+  column-gap: 8px; /* gap between columns */
+  /* NOTE use gap as a sort of minumum by defining along with, say, justify-content:"space-between" */
   padding: 20px 0; /* if you want more height but dont need to adjust vertical alignment */
   height: 100px;   /* if you do need to adjust vertical alignment */
-  display: flex; /* or inline-flex */
-  justify-content: flex-start (default); /* "center" "flex-end" "space-around" "space-between" "space-evenly" - horizontal alignment */
-  align-items: stretch (default); /* "center" "flex-start" "flex-end" "baseline" - vertical alignment */
-  align-content: flex-start (default); /* similar to align-items but used to space out rows/columns of wrapped content - "center" "flex-end" "space-between-around-evenly" "stretch" */
-  gap: 8px; /* sets gap all around the items */
-  gap: 8px 10px /* row-gap column-gap */
-  row-gap: 8px;
-  column-gap: 8px;
-  /* use gap as a sort of minumum by defining along with, say, justify-content:"space-around" */
-  flex-wrap: nowrap (default); /* "wrap" forces items that don't fit to be wrapped to the next row */
-  flex-direction: column; /* for column.. align-items=horizontal alignment / justify-content=vertical alignment */
-  flex-flow: row-reverse wrap; /* a shorthand which combines flex-direction and flex-wrap */ 
 }
 
 
@@ -2189,8 +2184,8 @@ for most purposes, authors should use `flex:` `auto`, `initial`, `none`, or `1, 
   flex: 0 1 content; /* will render as content width - will not grow - will shrink to its minimum content size if forced */
     
   min-width: 50px;   /* wont shrink below min */  
-  min-height: 100px; /* wont shrink below min */  
   max-width: 500px;  /* wont grow beyond max */
+  min-height: 100px; /* wont shrink below min */  
   max-height: 200px; /* wont grow beyond max */
     
   width: 500px; /* explicit width will be respected hard */
@@ -2229,9 +2224,9 @@ note `flex` is actually a **shorthand property**
 
 **shorthand properties** are CSS properties that enable you to set the values of multiple other CSS properties simultaneously
 
-note by default, **flex items** won’t shrink below their minimum content size (the length of the longest word or fixed-size element) - use `min-width` to change this
+note by default, **flex items** won't shrink below their minimum content size (the length of the longest word or fixed-size element) - use `min-width` to change this
 
-note when you change to `flex-direction: column` --\> replace every instance of the word `width` on this page with `height` (in your head)
+note when you change to `flex-direction: column` --\> the above applies but with the word `width` replaced with `height`
 
 Example: 3 columns - the middle column does not shrink below `width: 250px`..
 
