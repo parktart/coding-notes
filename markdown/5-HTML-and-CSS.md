@@ -2134,7 +2134,7 @@ The following image was achieved using *only* flexbox to arrange, size, and plac
 
 ![flexbox3](./../objects-photos-etc/flexbox3.png)
 
-remember that these flexbox properties are just a language that lets you tell browsers how to arrange a bunch of HTML elements - the hard part isn’t actually writing the HTML and CSS, but figuring out conceptually (on a piece of paper), the behavior of all the necessary boxes to create a given layout
+remember that these flexbox properties are just a language that lets you tell browsers how to arrange a bunch of HTML elements - the hard part isn't actually writing the HTML and CSS, but figuring out conceptually (on a piece of paper), the behavior of all the necessary boxes to create a given layout
 
 
 
@@ -2262,9 +2262,7 @@ from [interneting is hard](https://www.internetingishard.com/html-and-css/flexbo
 
 we will use flexbox to build this:
 
-![flexbox-example](/home/parker/Dropbox/objects-photos-etc/flexbox-example.png)
-
-$ code ~/Desktop/testing/flexbox (open this folder to view code)
+![flexbox-example](./../objects-photos-etc/flexbox-example.png)
 
 let's start with clearing margin and padding..
 
